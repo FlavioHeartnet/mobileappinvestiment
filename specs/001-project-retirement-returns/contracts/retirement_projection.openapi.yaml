@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  title: Retirement Projection Simulator API (Local Module Contract)
+  version: 0.1.0
+  description: |
+    Contract that models the data exchange between the Flutter presentation layer and the
+    local projection engine. All operations run on-device; no network transport is required.
+servers:
+  - url: app://local
+    description: Local invocation within the Flutter process.
+paths:
+  /simulations/retirement:
+    post:
+      summary: Run a retirement investment projection.
+      description: Validates input scenario, reconciles yields, and returns monthly ledger plus summary metrics.
+      operationId: runRetirementProjection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvestmentScenarioRequest'
+      responses:
+        '200':
+          description: Projection completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectionResponse'
+        '400':
+          description: Validation errors prevent running the simulation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+components:
+  schemas:
+    InvestmentScenarioRequest:
+      type: object
+      required:
+        - initialPrincipal
+        - monthlyContribution
+        - monthlyInterestRate
+        - annualYield
+        - investmentYears
+        - custodyTaxRate
+        - comeCotasEnabled
+      properties:
+        initialPrincipal:
+          type: number
+          format: double
+          minimum: 0
+          description: Starting balance in BRL.
+        monthlyContribution:
+          type: number
+          format: double
+          minimum: 0
+          description: Contribution added at the start of each month.
+        monthlyInterestRate:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Gross monthly rate as a decimal (0.01 = 1%).
+        annualYield:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Annual effective yield as a decimal.
+        investmentYears:
+          type: integer
+          minimum: 1
+          maximum: 40
+          description: Duration of the investment in years.
+        custodyTaxRate:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Annual custody tax rate as a decimal.
+        comeCotasEnabled:
+          type: boolean
+          description: Whether semiannual withholding (come-cotas) applies.
+        acknowledgedYieldMismatch:
+          type: boolean
+          description: User confirmation flag when monthly vs annual yields diverge >0.1pp.
+    ProjectionResponse:
+      type: object
+      required:
+        - scenario
+        - summary
+        - ledger
+      properties:
+        scenario:
+          $ref: '#/components/schemas/ScenarioEcho'
+        summary:
+          $ref: '#/components/schemas/SimulationSummary'
+        ledger:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyLedgerEntry'
+    ScenarioEcho:
+      type: object
+      properties:
+        monthlyRateAnnualizedDelta:
+          type: number
+          format: double
+          description: Difference between implied annual rate and provided annual yield (percentage points).
+        custodyTaxFrequency:
+          type: string
+          enum: [monthly, annual]
+          description: How custody tax was applied across the horizon.
+    SimulationSummary:
+      type: object
+      required:
+        - totalContributions
+        - totalInterest
+        - totalCustodyTax
+        - totalIncomeTax
+        - grossFinalBalance
+        - netAfterTaxes
+        - effectiveAliquot
+        - projectionHorizonMonths
+      properties:
+        totalContributions:
+          type: number
+          format: double
+        totalInterest:
+          type: number
+          format: double
+        totalCustodyTax:
+          type: number
+          format: double
+        totalIncomeTax:
+          type: number
+          format: double
+        grossFinalBalance:
+          type: number
+          format: double
+        netAfterTaxes:
+          type: number
+          format: double
+        effectiveAliquot:
+          type: number
+          format: double
+          description: Effective tax rate on gains (0-1).
+        projectionHorizonMonths:
+          type: integer
+    MonthlyLedgerEntry:
+      type: object
+      required:
+        - monthIndex
+        - startingBalance
+        - contribution
+        - interestAccrued
+        - custodyTaxDebited
+        - incomeTaxWithheld
+        - endingBalance
+        - cumulativeContribution
+        - cumulativeInterest
+      properties:
+        monthIndex:
+          type: integer
+        startingBalance:
+          type: number
+          format: double
+        contribution:
+          type: number
+          format: double
+        interestAccrued:
+          type: number
+          format: double
+        custodyTaxDebited:
+          type: number
+          format: double
+        incomeTaxWithheld:
+          type: number
+          format: double
+        endingBalance:
+          type: number
+          format: double
+        cumulativeContribution:
+          type: number
+          format: double
+        cumulativeInterest:
+          type: number
+          format: double
+    ValidationProblem:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldError'
+    FieldError:
+      type: object
+      required:
+        - field
+        - code
+        - message
+      properties:
+        field:
+          type: string
+        code:
+          type: string
+          enum: [required, range_error, mismatch, regulatory_limit]
+        message:
+          type: string
