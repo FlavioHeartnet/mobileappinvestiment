@@ -2,9 +2,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'src/presentation/screens/investment_input_screen.dart';
-import 'src/presentation/screens/results_screen.dart';
-import 'src/providers/tab_controller.dart';
+import 'package:mobile/src/presentation/screens/investment_input_screen.dart';
+import 'package:mobile/src/presentation/screens/results_screen.dart';
+import 'package:mobile/src/providers/tab_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,19 +16,19 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return const CupertinoApp(
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const <Locale>[
+      supportedLocales: <Locale>[
         Locale('pt', 'BR'),
         Locale('en'),
       ],
-      locale: const Locale('pt', 'BR'),
-      home: const _HomeTabs(),
+      locale: Locale('pt', 'BR'),
+      home: _HomeTabs(),
     );
   }
 }

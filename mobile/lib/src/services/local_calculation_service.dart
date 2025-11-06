@@ -66,7 +66,7 @@ class LocalCalculationService implements ICalculationRepository {
         final int mm = ((m - 1) % 12) + 1; // 1..12
         final bool isComeCotasMonth = (mm == 5 || mm == 11);
         if (isComeCotasMonth && profitSinceLastTax > 0) {
-          final double aliquot = _comeCotasAliquot(monthsSinceLastTax);
+          final double aliquot = _comeCotasAliquot(m);
           final double tax = profitSinceLastTax * aliquot;
           total -= tax;
           totalTaxes += tax;
