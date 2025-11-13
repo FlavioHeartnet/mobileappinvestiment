@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "767555228453",
+    "project_id": "organizer-financial",
+    "storage_bucket": "organizer-financial.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767555228453:android:dfc527026d868764ce40cc",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767555228453-nbpp3vrcgkluvvpoegkvds177s0c5hgh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5FjP5aB2-RpW_NRGkISo4jm3eAbmQqj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767555228453-nbpp3vrcgkluvvpoegkvds177s0c5hgh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "767555228453-2mq12o6ksubbotc6ci3mh13g4k7g3dl8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
