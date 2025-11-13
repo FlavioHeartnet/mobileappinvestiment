@@ -121,3 +121,7 @@ Final Effective Aliquot (%)
 - [ ] Create an `AuthNotifier` (StateNotifier) + `authProvider` to manage auth state and expose login/logout methods.
 - [ ] Integrate `LoginScreen` into the app (present modally or add a named route `/login`).
 - [ ] Add unit tests for `AuthService` and `AuthNotifier` (happy path + invalid credentials).
+
+### New: match HTML login layout using app theme
+
+- [ ] Implement `LoginScreen` UI to reproduce `specs/001-project-retirement-returns/html/login.html` visual layout (centered card, headline "Bem-vindo(a) de volta!", subtitle, email/password inputs, primary action, Google action, "OU" divider and links), BUT use the app's `colorScheme` and `fontFamily` (Manrope) as defined in `lib/main.dart` so the screen integrates with the app theme and color tokens.

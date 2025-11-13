@@ -74,6 +74,13 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
           'Calculadora de Aposentadoria',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.login),
+            tooltip: 'Entrar',
+            onPressed: () => Navigator.of(context).pushNamed('/login'),
+          ),
+        ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
