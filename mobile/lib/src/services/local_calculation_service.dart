@@ -66,7 +66,8 @@ class LocalCalculationService implements ICalculationRepository {
         final int mm = ((m - 1) % 12) + 1; // 1..12
         final bool isComeCotasMonth = (mm == 5 || mm == 11);
         if (isComeCotasMonth && profitSinceLastTax > 0) {
-          final double aliquot = _comeCotasAliquot(m);
+          // decide aliquot using monthsSinceLastTax and the threshold from params
+          final double aliquot = _comeCotasAliquot(monthsSinceLastTax, params.comeCotasThresholdMonths);
           final double tax = profitSinceLastTax * aliquot;
           total -= tax;
           totalTaxes += tax;
@@ -108,8 +109,9 @@ class LocalCalculationService implements ICalculationRepository {
   }
 
   // Come-cotas aliquot: if gains retained >= 12 months treat as long-term 15%, otherwise 20%
-  double _comeCotasAliquot(int monthsSinceLastTax) {
-    return monthsSinceLastTax >= 12 ? 0.15 : 0.20;
+  double _comeCotasAliquot(int monthsSinceLastTax, int thresholdMonths) {
+    // If gains retained >= thresholdMonths treat as long-term 15%, otherwise 20%
+    return monthsSinceLastTax >= thresholdMonths ? 0.15 : 0.20;
   }
 
   // Brazilian fixed-income final income tax table

@@ -61,6 +61,7 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgLight = const Color(0xFFF7F8F9);
     final bgDark = const Color(0xFF212121);
+    final params = ref.watch(inputParamsProvider);
 
   return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
@@ -72,11 +73,6 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
         title: const Text(
           'Calculadora de Aposentadoria',
           style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          onPressed: () => Navigator.maybePop(context),
-          icon: const Icon(Icons.arrow_back),
-          color: isDark ? Colors.white : Colors.black87,
         ),
       ),
       body: LayoutBuilder(
@@ -155,6 +151,40 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
                                 suffixText: '%',
                                 controller: _brokerageController,
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+
+                          // Come-cotas controls: enable switch + threshold slider
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SwitchListTile(
+                                contentPadding: EdgeInsets.zero,
+                                value: params.applyComeCotas,
+                                onChanged: (v) => ref.read(inputParamsProvider.notifier).setApplyComeCotas(v),
+                                title: const Text('Aplicar Come-cotas'),
+                                subtitle: const Text('Aplica a cobrança semestral (maio/novembro)'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12, right: 12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Limite para aliquota reduzida: ${params.comeCotasThresholdMonths} meses', style: const TextStyle(fontWeight: FontWeight.w600)),
+                                    Slider(
+                                      value: params.comeCotasThresholdMonths.toDouble(),
+                                      min: 6,
+                                      max: 24,
+                                      divisions: 18,
+                                      label: '${params.comeCotasThresholdMonths}m',
+                                      onChanged: params.applyComeCotas
+                                          ? (v) => ref.read(inputParamsProvider.notifier).setComeCotasThreshold(v.round())
+                                          : null,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

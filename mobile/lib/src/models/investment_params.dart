@@ -6,6 +6,7 @@ class InvestmentParamsModel {
   final int years;
   final double custodyTaxPercentAnnual; // e.g., 0.3 means 0.3%
   final bool applyComeCotas;
+  final int comeCotasThresholdMonths;
 
   const InvestmentParamsModel({
     required this.initialValue,
@@ -15,6 +16,7 @@ class InvestmentParamsModel {
     required this.years,
     required this.custodyTaxPercentAnnual,
     required this.applyComeCotas,
+    required this.comeCotasThresholdMonths,
   });
 
   InvestmentParamsModel copyWith({
@@ -25,6 +27,7 @@ class InvestmentParamsModel {
     int? years,
     double? custodyTaxPercentAnnual,
     bool? applyComeCotas,
+    int? comeCotasThresholdMonths,
   }) {
     return InvestmentParamsModel(
       initialValue: initialValue ?? this.initialValue,
@@ -36,6 +39,7 @@ class InvestmentParamsModel {
       custodyTaxPercentAnnual:
           custodyTaxPercentAnnual ?? this.custodyTaxPercentAnnual,
       applyComeCotas: applyComeCotas ?? this.applyComeCotas,
+      comeCotasThresholdMonths: comeCotasThresholdMonths ?? this.comeCotasThresholdMonths,
     );
   }
 }

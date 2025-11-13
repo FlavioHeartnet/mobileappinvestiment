@@ -5,16 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/investment_params.dart';
 
 class InputParamsNotifier extends StateNotifier<InvestmentParamsModel> {
-  InputParamsNotifier()
-      : super(const InvestmentParamsModel(
-          initialValue: 1000.0,
-          monthlyInvestment: 500.0,
-          monthlyInterestPercent: 0.8,
-          annualInterestPercent: 0.0,
-          years: 10,
-          custodyTaxPercentAnnual: 0.3,
-          applyComeCotas: true,
-        ));
+    InputParamsNotifier()
+            : super(const InvestmentParamsModel(
+                    initialValue: 1000.0,
+                    monthlyInvestment: 500.0,
+                    monthlyInterestPercent: 0.8,
+                    annualInterestPercent: 0.0,
+                    years: 10,
+                    custodyTaxPercentAnnual: 0.3,
+                    applyComeCotas: false,
+                    comeCotasThresholdMonths: 12,
+                ));
 
   void setInitialValue(double v) => state = state.copyWith(initialValue: v);
   void setMonthlyInvestment(double v) =>
@@ -34,6 +35,8 @@ class InputParamsNotifier extends StateNotifier<InvestmentParamsModel> {
       state = state.copyWith(custodyTaxPercentAnnual: v);
   void setApplyComeCotas(bool v) =>
       state = state.copyWith(applyComeCotas: v);
+  void setComeCotasThreshold(int v) =>
+      state = state.copyWith(comeCotasThresholdMonths: v);
 }
 
 final inputParamsProvider =
