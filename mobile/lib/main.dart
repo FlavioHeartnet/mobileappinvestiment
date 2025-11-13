@@ -92,6 +92,7 @@ class AppRoot extends StatelessWidget {
       locale: const Locale('pt', 'BR'),
       home: const RetirementCalculatorScreen(),
       routes: {
+        '/calculator': (context) => const RetirementCalculatorScreen(),
         '/results': (context) => const ResultsDetailsScreen(),
         '/login': (context) => const LoginScreen(),
       },

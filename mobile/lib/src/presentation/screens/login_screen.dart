@@ -28,7 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final ok = await notifier.login(user, pass);
     if (ok) {
       if (mounted) {
-        Navigator.of(context).maybePop();
+        Navigator.of(context).pushNamed("/calculator");
       }
     }
   }
@@ -37,8 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(authProvider);
     final theme = Theme.of(context);
-    final color = theme.colorScheme.primary;
-    final vibrant = theme.colorScheme.secondary;
+  final color = theme.colorScheme.primary;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -124,8 +123,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
 
                         const SizedBox(height: 12),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Expanded(child: Divider()),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -136,17 +135,42 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
 
                         const SizedBox(height: 12),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.login),
-                          label: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            child: Text('Entrar com Google', style: TextStyle(fontWeight: FontWeight.w600)),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: vibrant,
-                            foregroundColor: theme.colorScheme.onSecondary,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        // Google button styled closer to official guidelines
+                        SizedBox(
+                          height: 48,
+                          child: OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: const Color(0xFF3C4043), // Google neutral ink
+                              side: const BorderSide(color: Color(0xFFDADCE0)), // Google gray border
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Google "G" mark at the left
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: Image.network(
+                                      'https://developers.google.com/identity/images/g-logo.png',
+                                      fit: BoxFit.contain,
+                                      errorBuilder: (context, error, stack) => const Icon(
+                                        Icons.g_mobiledata,
+                                        size: 18,
+                                        color: Color(0xFF4285F4),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Text('Entrar com o Google'),
+                              ],
+                            ),
                           ),
                         ),
 
