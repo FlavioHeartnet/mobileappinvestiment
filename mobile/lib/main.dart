@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
 import 'package:mobile/src/presentation/screens/results_details_screen.dart';
+import 'package:mobile/src/presentation/screens/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,6 +93,7 @@ class AppRoot extends StatelessWidget {
       home: const RetirementCalculatorScreen(),
       routes: {
         '/results': (context) => const ResultsDetailsScreen(),
+        '/login': (context) => const LoginScreen(),
       },
     );
   }
