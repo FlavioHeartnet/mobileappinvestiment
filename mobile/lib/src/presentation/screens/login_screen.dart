@@ -21,15 +21,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  Future<void> _submitEmail() async {
     final notifier = ref.read(authProvider.notifier);
-    final user = _userController.text.trim();
+    final email = _userController.text.trim();
     final pass = _passController.text;
-    final ok = await notifier.login(user, pass);
-    if (ok) {
-      if (mounted) {
-        Navigator.of(context).pushNamed('/calculator');
-      }
+    if (email.isEmpty || pass.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+    final ok = await notifier.login(email, pass);
+    if (ok && mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+    }
+  }
+
+  Future<void> _submitGoogle() async {
+    final notifier = ref.read(authProvider.notifier);
+    final ok = await notifier.signInWithGoogle();
+    if (ok && mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
     }
   }
 
@@ -98,7 +110,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           obscureText: true,
                           textInputAction: TextInputAction.done,
-                          onSubmitted: (_) => _submit(),
+                          onSubmitted: (_) => _submitEmail(),
                         ),
                         const SizedBox(height: 8),
                         Align(
@@ -114,7 +126,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           const Center(child: CircularProgressIndicator())
                         else
                           FilledButton(
-                            onPressed: _submit,
+                            onPressed: _submitEmail,
                             style: FilledButton.styleFrom(
                               backgroundColor: color,
                               foregroundColor: theme.colorScheme.onPrimary,
@@ -141,7 +153,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         SizedBox(
                           height: 48,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: state.isLoading ? null : _submitGoogle,
                             style: OutlinedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: const Color(0xFF3C4043), // Google neutral ink

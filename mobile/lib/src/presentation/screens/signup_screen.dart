@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignupScreen extends StatefulWidget {
+import 'package:mobile/src/providers/auth_notifier.dart';
+
+class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
@@ -25,18 +28,57 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _submit() {
-    // TODO: hook into Auth flow when available
-    FocusScope.of(context).unfocus();
+  Future<void> _submit() async {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final pass = _passController.text;
+    final confirmPass = _confirmPassController.text;
+
+    // Validation
+    if (name.isEmpty || email.isEmpty || pass.isEmpty || confirmPass.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+
+    if (pass != confirmPass) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('As senhas não conferem')),
+      );
+      return;
+    }
+
+    if (pass.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('A senha deve ter no mínimo 6 caracteres')),
+      );
+      return;
+    }
+
+    final notifier = ref.read(authProvider.notifier);
+    final ok = await notifier.signup(name, email, pass);
+    if (ok && mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+    }
+  }
+
+  Future<void> _submitGoogle() async {
+    final notifier = ref.read(authProvider.notifier);
+    final ok = await notifier.signInWithGoogle();
+    if (ok && mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-  final theme = Theme.of(context);
-  final color = theme.colorScheme.primary;
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.primary;
+    final state = ref.watch(authProvider);
 
     return Scaffold(
-  backgroundColor: theme.colorScheme.surface,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -77,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: _nameController,
+                          enabled: !state.isLoading,
                           decoration: InputDecoration(
                             hintText: 'Digite seu nome completo',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -91,6 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: _emailController,
+                          enabled: !state.isLoading,
                           decoration: InputDecoration(
                             hintText: 'seuemail@exemplo.com',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -106,6 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: _passController,
+                          enabled: !state.isLoading,
                           decoration: InputDecoration(
                             hintText: 'Crie uma senha',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -125,6 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: _confirmPassController,
+                          enabled: !state.isLoading,
                           decoration: InputDecoration(
                             hintText: 'Confirme sua senha',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -141,16 +187,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 20),
                         // Cadastrar button
-                        FilledButton(
-                          onPressed: _submit,
-                          style: FilledButton.styleFrom(
-                            backgroundColor: color,
-                            foregroundColor: theme.colorScheme.onPrimary,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        if (state.isLoading)
+                          const Center(child: CircularProgressIndicator())
+                        else
+                          FilledButton(
+                            onPressed: _submit,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: color,
+                              foregroundColor: theme.colorScheme.onPrimary,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: const Text('Cadastrar', style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
-                          child: const Text('Cadastrar', style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
 
                         const SizedBox(height: 12),
                         const Row(
@@ -169,7 +218,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(
                           height: 48,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: state.isLoading ? null : _submitGoogle,
                             style: OutlinedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: const Color(0xFF3C4043),
@@ -230,6 +279,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                         ),
+
+                        if (state.error != null) ...[
+                          const SizedBox(height: 8),
+                          Text(state.error!, style: TextStyle(color: theme.colorScheme.error)),
+                        ],
                       ],
                     ),
                   ),

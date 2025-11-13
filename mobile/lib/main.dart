@@ -7,12 +7,28 @@ import 'package:mobile/src/presentation/screens/login_screen.dart';
 import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
 import 'package:mobile/src/presentation/screens/signup_screen.dart';
+import 'package:mobile/src/providers/auth_notifier.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   runApp(const ProviderScope(child: AppRoot()));
+}
+
+class AuthWrapper extends ConsumerWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    if (authState.isAuthenticated) {
+      return const RetirementCalculatorScreen();
+    } else {
+      return const LoginScreen();
+    }
+  }
 }
 
 class AppRoot extends StatelessWidget {
@@ -95,7 +111,7 @@ class AppRoot extends StatelessWidget {
         Locale('en'),
       ],
       locale: const Locale('pt', 'BR'),
-      home: const RetirementCalculatorScreen(),
+      home: const AuthWrapper(),
       routes: {
         '/calculator': (context) => const RetirementCalculatorScreen(),
         '/results': (context) => const ResultsDetailsScreen(),
