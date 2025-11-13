@@ -197,7 +197,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                             style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.75)),
                           ),
                         ),
-                        Expanded(flex: 2, child: Text(Formatters.money(m.cumulativeTotal), textAlign: TextAlign.end)),
+                        Expanded(flex: 3, child: Text(Formatters.money(m.cumulativeTotal), textAlign: TextAlign.end)),
                       ],
                     ),
                   );

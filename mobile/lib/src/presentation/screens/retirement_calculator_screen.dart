@@ -78,13 +78,17 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isWide = constraints.maxWidth >= 640;
-          return SingleChildScrollView(
-            controller: _scrollController,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: Column(
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 720),
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Inputs section
@@ -216,6 +220,7 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
                   ],
                 ),
               ),
+            ),
             ),
           );
         },
