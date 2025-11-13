@@ -95,3 +95,21 @@ Final Effective Aliquot (%)
 - [x] Implement a "pull to refresh" or a "Recalculate" button on the CupertinoNavigationBar to re-run the simulation if inputs change.
 
 - [x] Implement a CupertinoActivityIndicator (loading spinner) that displays while the FutureProvider from Epic 3 is in its loading state.
+
+## Epic: 5. UI Redesign to match `code.html`
+
+- [x] Review `specs/001-project-retirement-returns/code.html` and map components to Flutter widgets.
+- [x] Implement a new screen `RetirementCalculatorScreen` that replicates the HTML layout (header, inputs, slider, action buttons, result cards, and details grid) using Flutter widgets.
+- [x] Wire the new screen as the first tab, replacing `InvestmentInputScreen` temporarily for visual parity.
+- [x] Fetch packages and run static analysis to ensure the project builds.
+- [ ] Run the application on android device if have one or in web and verify the new UI matches the HTML design.
+
+## Epic: 6. Dedicated Results Screen & Navigation
+
+- [ ] Create a dedicated Material screen `ResultsDetailsScreen` to host all results widgets (hero cards, summary list, monthly breakdown list).
+- [ ] Move results presentation currently embedded in `RetirementCalculatorScreen` to `ResultsDetailsScreen` for separation of concerns.
+- [ ] Add navigation from `RetirementCalculatorScreen` to `ResultsDetailsScreen` upon pressing “Calcular”. Provide a Back button to return to the simulator.
+- [ ] Keep using Riverpod (`simulationProvider`) to source data so navigation does not require heavy route arguments.
+- [ ] Add named routes in `MaterialApp` (e.g., `/`, `/results`) and wire Navigator.push to open results.
+- [ ] Remove the inline results section from `RetirementCalculatorScreen` once the dedicated screen is functional.
+- [ ] Manual QA: verify scroll behavior, dark/light themes, and parity with `code.html` on both screens.

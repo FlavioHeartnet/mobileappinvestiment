@@ -1,10 +1,8 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/src/presentation/screens/investment_input_screen.dart';
-import 'package:mobile/src/presentation/screens/results_screen.dart';
-import 'package:mobile/src/providers/tab_controller.dart';
+import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
+import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,45 +14,47 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    final seed = const Color(0xFF5D87FF);
+    final lightScheme = ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.light);
+    final darkScheme = ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark);
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: lightScheme,
+        fontFamily: 'Manrope',
+        filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(lightScheme.primary),
+            foregroundColor: WidgetStatePropertyAll(lightScheme.onPrimary),
+          ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: darkScheme,
+        fontFamily: 'Manrope',
+        filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(darkScheme.primary),
+            foregroundColor: WidgetStatePropertyAll(darkScheme.onPrimary),
+          ),
+        ),
+      ),
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: <Locale>[
+      supportedLocales: const <Locale>[
         Locale('pt', 'BR'),
         Locale('en'),
       ],
-      locale: Locale('pt', 'BR'),
-      home: _HomeTabs(),
-    );
-  }
-}
-
-class _HomeTabs extends StatelessWidget {
-  const _HomeTabs();
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      controller: tabController,
-      tabBar: CupertinoTabBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(CupertinoIcons.chart_bar), label: 'Simulador'),
-        BottomNavigationBarItem(icon: Icon(CupertinoIcons.list_bullet), label: 'Resultados'),
-      ]),
-      tabBuilder: (BuildContext context, int index) {
-        switch (index) {
-          case 0:
-            return CupertinoTabView(builder: (BuildContext _) => const InvestmentInputScreen());
-          case 1:
-            return CupertinoTabView(builder: (BuildContext _) => const ResultsScreen());
-          default:
-            return CupertinoTabView(builder: (BuildContext _) => const InvestmentInputScreen());
-        }
+      locale: const Locale('pt', 'BR'),
+      home: const RetirementCalculatorScreen(),
+      routes: {
+        '/results': (context) => const ResultsDetailsScreen(),
       },
-      backgroundColor: CupertinoColors.systemBackground,
     );
   }
 }
