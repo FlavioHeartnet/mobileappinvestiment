@@ -14,7 +14,7 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final seed = const Color(0xFF5D87FF);
+    final seed = const Color.fromRGBO(93, 135, 255, 1);
     final lightScheme = ColorScheme.fromSeed(seedColor: seed);
     final darkScheme = ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark);
     return MaterialApp(
