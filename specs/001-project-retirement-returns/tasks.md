@@ -113,3 +113,11 @@ Final Effective Aliquot (%)
 - [ ] Add named routes in `MaterialApp` (e.g., `/`, `/results`) and wire Navigator.push to open results.
 - [ ] Remove the inline results section from `RetirementCalculatorScreen` once the dedicated screen is functional.
 - [ ] Manual QA: verify scroll behavior, dark/light themes, and parity with `code.html` on both screens.
+
+## Epic: 7. Authorization (New Feature)
+
+- [ ] Design a Cupertino-style `LoginScreen` with username and password fields, clear UX, and keyboard dismissal.
+- [ ] Create a simple `AuthService` (local) that simulates login/logout for prototyping and tests.
+- [ ] Create an `AuthNotifier` (StateNotifier) + `authProvider` to manage auth state and expose login/logout methods.
+- [ ] Integrate `LoginScreen` into the app (present modally or add a named route `/login`).
+- [ ] Add unit tests for `AuthService` and `AuthNotifier` (happy path + invalid credentials).

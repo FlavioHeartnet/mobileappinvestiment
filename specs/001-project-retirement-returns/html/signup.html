@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cadastro - Calculadora de Aposentadoria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="flex min-h-screen w-full items-center justify-center p-4">
+<div class="w-full max-w-md space-y-6">
+<div class="text-center">
+<h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Crie sua Conta</h1>
+<p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Comece a planejar seu futuro hoje mesmo.</p>
+</div>
+<div class="space-y-4">
+<label class="flex flex-col">
+<p class="pb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Nome Completo</p>
+<input class="form-input h-12 w-full flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-white p-3 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-400 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-background-dark/50 dark:text-white dark:placeholder:text-gray-500" placeholder="Digite seu nome completo" type="text"/>
+</label>
+<label class="flex flex-col">
+<p class="pb-2 text-sm font-medium text-gray-700 dark:text-gray-300">E-mail</p>
+<input class="form-input h-12 w-full flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-white p-3 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-400 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-background-dark/50 dark:text-white dark:placeholder:text-gray-500" placeholder="seuemail@exemplo.com" type="email"/>
+</label>
+<label class="flex flex-col">
+<p class="pb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Senha</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg border border-r-0 border-gray-300 bg-white p-3 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-400 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-background-dark/50 dark:text-white dark:placeholder:text-gray-500" placeholder="Crie uma senha" type="password"/>
+<div class="flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-white px-3 text-gray-500 dark:border-gray-700 dark:bg-background-dark/50 dark:text-gray-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">visibility</span>
+</div>
+</div>
+</label>
+<label class="flex flex-col">
+<p class="pb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Confirmar Senha</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg border border-r-0 border-gray-300 bg-white p-3 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-400 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-background-dark/50 dark:text-white dark:placeholder:text-gray-500" placeholder="Confirme sua senha" type="password"/>
+<div class="flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-white px-3 text-gray-500 dark:border-gray-700 dark:bg-background-dark/50 dark:text-gray-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">visibility_off</span>
+</div>
+</div>
+</label>
+</div>
+<div class="space-y-4 pt-2">
+<button class="flex h-12 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-background-dark transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark">Cadastrar</button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+<span class="mx-4 flex-shrink text-sm text-gray-500 dark:text-gray-400">ou</span>
+<div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+</div>
+<button class="flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-6 text-base font-medium text-gray-800 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:border-gray-700 dark:bg-background-dark/50 dark:text-white dark:hover:bg-background-dark/80 dark:focus:ring-offset-background-dark">
+<svg class="h-5 w-5" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.578 12.27c0-.79-.07-1.54-.2-2.27h-9.88v4.28h5.69c-.24 1.38-.97 2.56-2.09 3.35v2.78h3.57c2.08-1.92 3.28-4.73 3.28-8.14z" fill="#4285F4"></path>
+<path d="M12.498 23c2.97 0 5.45-.98 7.28-2.66l-3.57-2.78c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.28-1.93-6.14-4.53H2.768v2.86c1.78 3.55 5.16 6.01 9.73 6.01z" fill="#34A853"></path>
+<path d="M6.358 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.04H2.768c-.72 1.42-1.15 3.03-1.15 4.76s.43 3.34 1.15 4.76l3.59-2.86z" fill="#FBBC05"></path>
+<path d="M12.498 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.938 2.05 15.458 1 12.498 1 7.938 1 4.558 3.46 2.778 7.04l3.58 2.86c.86-2.6 3.28-4.52 6.14-4.52z" fill="#EA4335"></path>
+</svg>
+                    Entrar com Google
+                </button>
+</div>
+<div class="text-center">
+<p class="text-sm text-gray-500 dark:text-gray-400">Ao se cadastrar, você concorda com nossos <a class="font-medium text-primary/80 hover:underline" href="#">Termos e Condições</a>.</p>
+<p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Já tem uma conta? <a class="font-bold text-primary hover:underline" href="#">Entre aqui</a></p>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html class="" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Confirmação de Redefinição de Senha</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2ECC71",
+              "background-light": "#F7F8FA",
+              "background-dark": "#0A0E13",
+              "foreground-light": "#FFFFFF",
+              "foreground-dark": "#111821",
+              "text-light": "#333333",
+              "text-dark": "#E5E7EB",
+              "text-secondary-light": "#6B7280",
+              "text-secondary-dark": "#9CA3AF",
+              "accent-light": "#014242",
+              "accent-dark": "#2ECC71"
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "0.75rem",
+              "xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-light dark:bg-background-dark p-4">
+<div class="flex w-full max-w-md flex-col items-center justify-center rounded-xl bg-foreground-light dark:bg-foreground-dark px-6 py-12 shadow-sm">
+<div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined !text-5xl" data-icon="mark_email_read">
+                    mark_email_read
+                </span>
+</div>
+<h1 class="text-accent-light dark:text-accent-dark text-center text-3xl font-bold tracking-tight text-text-light dark:text-text-dark">
+                Verifique seu e-mail
+            </h1>
+<p class="mt-3 max-w-sm text-center text-base font-normal leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+                Enviamos um link para redefinir sua senha para u*****o@email.com. Pode levar alguns minutos para chegar. Não se esqueça de verificar sua caixa de spam.
+            </p>
+<div class="mt-8 flex w-full flex-col gap-4">
+<button class="flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-accent-light px-5 text-base font-bold leading-normal tracking-wide text-white transition-colors hover:bg-accent-light/90 dark:bg-accent-dark dark:text-background-dark dark:hover:bg-accent-dark/90">
+<span class="truncate">Voltar para o Login</span>
+</button>
+<p class="text-center text-sm font-normal leading-normal text-text-secondary-light dark:text-text-secondary-dark">
+                    Não recebeu? <a class="font-semibold text-accent-light underline decoration-accent-light/50 transition-colors hover:decoration-accent-light dark:text-accent-dark dark:decoration-accent-dark/50 dark:hover:decoration-accent-dark" href="#">Reenviar e-mail</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>

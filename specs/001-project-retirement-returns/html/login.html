@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Calculadora de Aposentadoria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --primary: #5D87FF;
+        --primary-vibrant: #6A3BFF;
+        --background-light: #f7f8f9;
+        --background-dark: #121212;
+      }
+      .dark {
+        --primary: #5D87FF;
+        --primary-vibrant: #8B6BFF;
+        --background-light: #1c1c1e;
+        --background-dark: #121212;
+      }
+    }
+  </style>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "var(--primary)",
+                    "primary-vibrant": "var(--primary-vibrant)",
+                    "background-light": "var(--background-light)",
+                    "background-dark": "var(--background-dark)",
+                },
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen w-full flex-col items-center justify-center p-4">
+<div class="w-full max-w-sm space-y-8">
+<div class="text-center">
+<h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Bem-vindo(a) de volta!</h1>
+<p class="mt-2 text-base text-gray-600 dark:text-gray-400">Faça login para continuar</p>
+</div>
+<div class="space-y-6">
+<div>
+<label class="text-sm font-medium leading-none text-gray-700 dark:text-gray-300" for="email">Email</label>
+<input class="form-input mt-2 flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-300 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-3 text-base font-normal leading-normal text-gray-900 dark:text-white" id="email" placeholder="seu@email.com" type="email"/>
+</div>
+<div>
+<label class="text-sm font-medium leading-none text-gray-700 dark:text-gray-300" for="password">Senha</label>
+<input class="form-input mt-2 flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-300 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-3 text-base font-normal leading-normal text-gray-900 dark:text-white" id="password" placeholder="••••••••" type="password"/>
+<div class="text-right mt-2">
+<a class="text-sm font-medium text-primary hover:underline" href="#">Esqueceu a senha?</a>
+</div>
+</div>
+<div class="flex flex-col space-y-4 pt-2">
+<button class="flex h-12 w-full items-center justify-center rounded-lg bg-primary px-6 py-2 text-base font-bold text-white transition-transform hover:scale-105 active:scale-100">
+            Entrar
+          </button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+<span class="mx-4 flex-shrink text-sm text-gray-500 dark:text-gray-400">OU</span>
+<div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+</div>
+<button class="flex h-12 w-full items-center justify-center rounded-lg bg-primary-vibrant px-6 py-2 text-base font-bold text-white transition-transform hover:scale-105 active:scale-100">
+<svg aria-hidden="true" class="mr-3 h-5 w-5" data-icon="google" data-prefix="fab" focusable="false" role="img" viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 21.2 172.9 60.3L337.9 162.7C309.4 138.5 281.7 128 248 128c-73.2 0-133.2 60.1-133.2 134.3s60 134.3 133.2 134.3c76.9 0 111.8-53.7 116.3-81.8H248v-65.7h239.5c1.4 13.5 2.5 27.4 2.5 41.8z" fill="currentColor"></path></svg>
+            Entrar com Google
+          </button>
+</div>
+<div class="text-center">
+<p class="text-sm text-gray-600 dark:text-gray-400">
+                Não tem uma conta?
+                <a class="font-medium text-primary hover:underline" href="#">Criar Conta</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>
