@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calculadora de Aposentadoria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --primary: #5D87FF;
+        --background-light: #f7f8f9;
+        --background-dark: #212121;
+      }
+      .dark {
+        --primary: #5D87FF;
+        --background-light: #2a2c34; 
+        --background-dark: #212121;
+      }
+    }
+  </style>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "var(--primary)",
+                    "background-light": "var(--background-light)",
+                    "background-dark": "var(--background-dark)",
+                },
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: var(--primary);
+        border-radius: 9999px;
+        cursor: pointer;
+        margin-top: -6px;
+    }
+    input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: var(--primary);
+        border-radius: 9999px;
+        cursor: pointer;
+    }
+    input[type="range"]::-ms-thumb {
+        width: 16px;
+        height: 16px;
+        background: var(--primary);
+        border-radius: 9999px;
+        cursor: pointer;
+    }
+</style>
+<style>
+    body {
+        min-height: max(884px, 100dvh);
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+<button class="text-gray-700 dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold leading-tight tracking-tight text-gray-900 dark:text-white flex-1 text-center pr-12">Calculadora de Aposentadoria</h1>
+</header>
+<main class="flex-1 px-4 py-6 max-w-2xl mx-auto w-full">
+<div class="space-y-8">
+<section class="space-y-4">
+<div class="flex flex-col sm:flex-row gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Investimento Inicial</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-200 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-14 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal text-gray-900 dark:text-white" placeholder="R$ 0,00" value="R$ 10.000,00"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Aporte Mensal</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-200 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-14 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal text-gray-900 dark:text-white" placeholder="R$ 0,00" value="R$ 500,00"/>
+</label>
+</div>
+<div class="pt-2">
+<div class="flex w-full items-center justify-between pb-2">
+<p class="text-base font-medium leading-normal text-gray-700 dark:text-gray-300">Por quanto tempo</p>
+<p class="text-base font-semibold leading-normal text-primary">25 anos</p>
+</div>
+<input class="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer range-sm" max="50" min="1" style="--range-progress: 50%;" type="range" value="25"/>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Juros Anual</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-200 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-14 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal text-gray-900 dark:text-white" placeholder="0%" value="8%"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Taxa de Corretagem (%)</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg bg-white dark:bg-background-light border border-gray-200 dark:border-gray-700 focus:border-primary/70 focus:ring-2 focus:ring-primary/20 h-14 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal text-gray-900 dark:text-white" placeholder="0%" value="0,2%"/>
+</label>
+</div>
+</section>
+<section class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="flex-1 h-14 px-6 py-2 flex items-center justify-center rounded-lg bg-primary text-white text-base font-bold transition-transform hover:scale-105 active:scale-100">Calcular</button>
+<button class="flex-1 h-14 px-6 py-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-gray-300 text-base font-bold transition-colors hover:bg-gray-300 dark:hover:bg-white/20">Limpar Campos</button>
+</section>
+<section class="space-y-4">
+<div class="bg-primary/10 dark:bg-primary/20 rounded-xl p-5 text-center">
+<p class="text-base font-medium text-primary/80 dark:text-blue-300">Renda Passiva Mensal</p>
+<p class="text-4xl font-extrabold text-green-600 dark:text-green-400 mt-1">R$ 2.860,40</p>
+</div>
+<div class="bg-white dark:bg-background-light rounded-xl p-5 text-center shadow-sm">
+<p class="text-base font-medium text-gray-600 dark:text-gray-300">Total (Após o Imposto)</p>
+<p class="text-4xl font-extrabold text-gray-800 dark:text-white mt-1">R$ 429.060,49</p>
+</div>
+</section>
+<section class="bg-white dark:bg-background-light rounded-xl p-6 space-y-4 shadow-sm">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Detalhes da Projeção</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+<div class="flex flex-col">
+<span class="text-sm text-gray-500 dark:text-gray-400">Valor Total Investido</span>
+<span class="text-lg font-semibold text-gray-800 dark:text-gray-200">R$ 160.000,00</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-gray-500 dark:text-gray-400">Total (Antes do Imposto)</span>
+<span class="text-lg font-semibold text-gray-800 dark:text-gray-200">R$ 476.541,75</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-gray-500 dark:text-gray-400">Juros</span>
+<span class="text-lg font-semibold text-green-500 dark:text-green-400">+ R$ 316.541,75</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-gray-500 dark:text-gray-400">Imposto de Renda</span>
+<span class="text-lg font-semibold text-red-500 dark:text-red-400">- R$ 47.481,26</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+
+</body></html>

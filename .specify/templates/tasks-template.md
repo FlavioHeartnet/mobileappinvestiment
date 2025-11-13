@@ -20,9 +20,10 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Flutter app**: `lib/` for production code, `test/` for unit/widget tests, `integration_test/` for end-to-end flows
-- **Multi-platform**: add `ios/`, `android/`, or `web/` only when platform-specific code is required
-- Paths shown below assume the Flutter structure documented in plan.md
+- **Single project**: `src/`, `tests/` at repository root
+- **Web app**: `backend/src/`, `frontend/src/`
+- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
+- Paths shown below assume single project - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -47,9 +48,9 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create Flutter project structure per implementation plan (lib/app, lib/core, lib/features/)
-- [ ] T002 Initialize Flutter stable toolchain dependencies (`provider`, `intl`, testing packages)
-- [ ] T003 [P] Configure linting (`flutter analyze`), formatting, and CI scripts
+- [ ] T001 Create project structure per implementation plan
+- [ ] T002 Initialize [language] project with [framework] dependencies
+- [ ] T003 [P] Configure linting and formatting tools
 
 ---
 
@@ -61,12 +62,12 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Scaffold shared domain models and services under `lib/core/`
-- [ ] T005 [P] Establish base ViewModel, state classes, and dependency injection wiring
-- [ ] T006 [P] Configure routing/navigation and app theme in `lib/app/`
-- [ ] T007 Create feature-level repositories/services for offline calculations
-- [ ] T008 Configure error handling, logging, and analytics hooks
-- [ ] T009 Setup environment configuration management (dev/prod flavor toggles)
+- [ ] T004 Setup database schema and migrations framework
+- [ ] T005 [P] Implement authentication/authorization framework
+- [ ] T006 [P] Setup API routing and middleware structure
+- [ ] T007 Create base models/entities that all stories depend on
+- [ ] T008 Configure error handling and logging infrastructure
+- [ ] T009 Setup environment configuration management
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -82,17 +83,17 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Unit test for domain calculator in `test/unit/finance/[name]_test.dart`
-- [ ] T011 [P] [US1] Integration test for primary flow in `integration_test/[name]_test.dart`
+- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] domain model in `lib/core/finance/[entity1].dart`
-- [ ] T013 [P] [US1] Create ViewModel state in `lib/features/[feature]/presentation/state/[state].dart`
-- [ ] T014 [US1] Implement calculation service in `lib/features/[feature]/domain/[service].dart`
-- [ ] T015 [US1] Implement screens/widgets in `lib/features/[feature]/presentation/views/[view].dart`
-- [ ] T016 [US1] Add validation and error handling in ViewModel
-- [ ] T017 [US1] Add logging/analytics events for user story 1 operations
+- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
+- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
+- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
+- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T016 [US1] Add validation and error handling
+- [ ] T017 [US1] Add logging for user story 1 operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -106,15 +107,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T018 [P] [US2] Unit test for additional domain rules in `test/unit/finance/[name]_test.dart`
-- [ ] T019 [P] [US2] Widget test for new UI branch in `test/widget/[name]_test.dart`
+- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Extend domain models in `lib/core/finance/[entity].dart`
-- [ ] T021 [US2] Implement ViewModel logic in `lib/features/[feature]/presentation/viewmodels/[viewmodel].dart`
-- [ ] T022 [US2] Update UI components in `lib/features/[feature]/presentation/views/[view].dart`
-- [ ] T023 [US2] Integrate with User Story 1 ViewModels and services (if needed)
+- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
+- [ ] T021 [US2] Implement [Service] in src/services/[service].py
+- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -128,14 +129,14 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T024 [P] [US3] Unit test for helper utilities in `test/unit/utils/[name]_test.dart`
-- [ ] T025 [P] [US3] Integration test for alternate scenario in `integration_test/[name]_test.dart`
+- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Extend ViewModel/state in `lib/features/[feature]/presentation/state/[state].dart`
-- [ ] T027 [US3] Implement supporting services in `lib/features/[feature]/domain/[service].dart`
-- [ ] T028 [US3] Update UI flows in `lib/features/[feature]/presentation/views/[view].dart`
+- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
+- [ ] T027 [US3] Implement [Service] in src/services/[service].py
+- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -198,12 +199,12 @@ Examples of foundational tasks (adjust based on your project):
 
 ```bash
 # Launch all tests for User Story 1 together (if tests requested):
-Task: "Unit test for domain calculator in test/unit/finance/[name]_test.dart"
-Task: "Integration test for [user journey] in integration_test/[name]_test.dart"
+Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
+Task: "Integration test for [user journey] in tests/integration/test_[name].py"
 
-# Launch all models/state for User Story 1 together:
-Task: "Create [Entity1] model in lib/core/finance/[entity1].dart"
-Task: "Create ViewModel state in lib/features/[feature]/presentation/state/[state].dart"
+# Launch all models for User Story 1 together:
+Task: "Create [Entity1] model in src/models/[entity1].py"
+Task: "Create [Entity2] model in src/models/[entity2].py"
 ```
 
 ---
