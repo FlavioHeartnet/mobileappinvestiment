@@ -1,46 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:mobile/src/providers/auth_notifier.dart';
-
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final TextEditingController _userController = TextEditingController();
+class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmPassController = TextEditingController();
+
+  bool _showPassword = false;
+  bool _showConfirmPassword = false;
 
   @override
   void dispose() {
-    _userController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
     _passController.dispose();
+    _confirmPassController.dispose();
     super.dispose();
   }
 
-  Future<void> _submit() async {
-    final notifier = ref.read(authProvider.notifier);
-    final user = _userController.text.trim();
-    final pass = _passController.text;
-    final ok = await notifier.login(user, pass);
-    if (ok) {
-      if (mounted) {
-        Navigator.of(context).pushNamed("/calculator");
-      }
-    }
+  void _submit() {
+    // TODO: hook into Auth flow when available
+    FocusScope.of(context).unfocus();
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(authProvider);
     final theme = Theme.of(context);
-  final color = theme.colorScheme.primary;
+    final color = theme.colorScheme.primary;
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -62,23 +58,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         const SizedBox(height: 8),
                         Text(
-                          'Bem-vindo(a) de volta!',
+                          'Crie sua Conta',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Faça login para continuar',
+                          'Comece a planejar seu futuro hoje mesmo.',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.75)),
                         ),
                         const SizedBox(height: 20),
 
+                        // Nome completo
+                        Text('Nome Completo', style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 8),
                         TextField(
-                          controller: _userController,
+                          controller: _nameController,
                           decoration: InputDecoration(
-                            labelText: 'Email',
-                            hintText: 'seu@email.com',
+                            hintText: 'Digite seu nome completo',
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                            filled: true,
+                          ),
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Email
+                        Text('E-mail', style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            hintText: 'seuemail@exemplo.com',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                             filled: true,
                           ),
@@ -86,64 +98,80 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 12),
+
+                        // Senha
+                        Text('Senha', style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 8),
                         TextField(
                           controller: _passController,
                           decoration: InputDecoration(
-                            labelText: 'Senha',
-                            hintText: '••••••••',
+                            hintText: 'Crie uma senha',
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                             filled: true,
+                            suffixIcon: IconButton(
+                              onPressed: () => setState(() => _showPassword = !_showPassword),
+                              icon: Icon(_showPassword ? Icons.visibility : Icons.visibility_off),
+                            ),
                           ),
-                          obscureText: true,
+                          obscureText: !_showPassword,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Confirmar Senha
+                        Text('Confirmar Senha', style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: _confirmPassController,
+                          decoration: InputDecoration(
+                            hintText: 'Confirme sua senha',
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                            filled: true,
+                            suffixIcon: IconButton(
+                              onPressed: () => setState(() => _showConfirmPassword = !_showConfirmPassword),
+                              icon: Icon(_showConfirmPassword ? Icons.visibility : Icons.visibility_off),
+                            ),
+                          ),
+                          obscureText: !_showConfirmPassword,
                           textInputAction: TextInputAction.done,
                           onSubmitted: (_) => _submit(),
                         ),
-                        const SizedBox(height: 8),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text('Esqueceu a senha?', style: TextStyle(color: color)),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
 
-                        if (state.isLoading)
-                          const Center(child: CircularProgressIndicator())
-                        else
-                          FilledButton(
-                            onPressed: _submit,
-                            style: FilledButton.styleFrom(
-                              backgroundColor: color,
-                              foregroundColor: theme.colorScheme.onPrimary,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: const Text('Entrar'),
+                        const SizedBox(height: 20),
+                        // Cadastrar button
+                        FilledButton(
+                          onPressed: _submit,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: color,
+                            foregroundColor: theme.colorScheme.onPrimary,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
+                          child: const Text('Cadastrar', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ),
 
                         const SizedBox(height: 12),
-                        const Row(
-                          children: [
+                        Row(
+                          children: const [
                             Expanded(child: Divider()),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 12.0),
-                              child: Text('OU', style: TextStyle(fontWeight: FontWeight.w600)),
+                              child: Text('ou', style: TextStyle(fontWeight: FontWeight.w600)),
                             ),
                             Expanded(child: Divider()),
                           ],
                         ),
 
                         const SizedBox(height: 12),
-                        // Google button styled closer to official guidelines
+                        // Google button per official guidelines
                         SizedBox(
                           height: 48,
                           child: OutlinedButton(
                             onPressed: () {},
                             style: OutlinedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              foregroundColor: const Color(0xFF3C4043), // Google neutral ink
-                              side: const BorderSide(color: Color(0xFFDADCE0)), // Google gray border
+                              foregroundColor: const Color(0xFF3C4043),
+                              side: const BorderSide(color: Color(0xFFDADCE0)),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               textStyle: const TextStyle(fontWeight: FontWeight.w600),
                               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -151,7 +179,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                // Google "G" mark at the left
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: SizedBox(
@@ -168,36 +195,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     ),
                                   ),
                                 ),
-                                const Text('Entrar com o Google'),
+                                const Text('Entrar com Google'),
                               ],
                             ),
                           ),
                         ),
 
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 16),
+                        // Terms and existing account
+                        Text(
+                          'Ao se cadastrar, você concorda com nossos Termos e Condições.',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodySmall?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.7)),
+                        ),
+                        const SizedBox(height: 8),
                         Center(
                           child: TextButton(
-                            onPressed: () => Navigator.of(context).pushNamed('/signup'),
+                            onPressed: () => Navigator.of(context).pushReplacementNamed('/login'),
                             child: RichText(
                               text: TextSpan(
-                                text: 'Não tem uma conta? ',
+                                text: 'Já tem uma conta? ',
                                 style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                                 children: [
                                   TextSpan(
-                                    text: 'Criar Conta',
-                                    style: TextStyle(color: color, fontWeight: FontWeight.w600),
+                                    text: 'Entre aqui',
+                                    style: TextStyle(color: color, fontWeight: FontWeight.w700),
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
-                        if (state.error != null) ...[
-                          const SizedBox(height: 8),
-                          Text(state.error!, style: TextStyle(color: theme.colorScheme.error)),
-                        ],
-
                       ],
                     ),
                   ),
