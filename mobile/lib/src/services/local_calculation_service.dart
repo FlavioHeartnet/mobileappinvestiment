@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
-import '../models/investment_params.dart';
-import '../models/monthly_breakdown_entry.dart';
-import '../models/simulation_result.dart';
-import '../repositories/calculation_repository.dart';
+import 'package:mobile/src/models/investment_params.dart';
+import 'package:mobile/src/models/monthly_breakdown_entry.dart';
+import 'package:mobile/src/models/simulation_result.dart';
+import 'package:mobile/src/repositories/calculation_repository.dart';
 
 class LocalCalculationService implements ICalculationRepository {
   const LocalCalculationService();

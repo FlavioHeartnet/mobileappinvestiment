@@ -1,4 +1,4 @@
-import 'monthly_breakdown_entry.dart';
+import 'package:mobile/src/models/monthly_breakdown_entry.dart';
 
 class SimulationResultModel {
   final double finalAmount;

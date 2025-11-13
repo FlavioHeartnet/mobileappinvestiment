@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/simulation_provider.dart';
-import '../../utils/formatters.dart';
+import 'package:mobile/src/providers/simulation_provider.dart';
+import 'package:mobile/src/utils/formatters.dart';
 
 class ResultsDetailsScreen extends ConsumerWidget {
   const ResultsDetailsScreen({super.key});
@@ -49,7 +49,6 @@ class ResultsDetailsScreen extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'Renda Passiva Mensal',
@@ -87,7 +86,6 @@ class ResultsDetailsScreen extends ConsumerWidget {
                             ],
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'Total (Após o Imposto)',
@@ -113,8 +111,8 @@ class ResultsDetailsScreen extends ConsumerWidget {
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(flex: 1, child: Container(margin: const EdgeInsets.only(right: 12), child: card1)),
-                              Expanded(flex: 1, child: Container(margin: const EdgeInsets.only(left: 12), child: card2)),
+                              Expanded(child: Container(margin: const EdgeInsets.only(right: 12), child: card1)),
+                              Expanded(child: Container(margin: const EdgeInsets.only(left: 12), child: card2)),
                             ],
                           );
                         }

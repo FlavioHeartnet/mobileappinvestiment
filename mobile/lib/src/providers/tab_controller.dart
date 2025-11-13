@@ -1,3 +1,3 @@
 import 'package:flutter/cupertino.dart';
 
-final CupertinoTabController tabController = CupertinoTabController(initialIndex: 0);
+final CupertinoTabController tabController = CupertinoTabController();

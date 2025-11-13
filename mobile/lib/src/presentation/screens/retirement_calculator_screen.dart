@@ -39,11 +39,11 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
   }
 
   void _calculate() {
-    double _parseNum(String s) => double.tryParse(s.replaceAll('.', '').replaceAll(',', '.')) ?? 0.0;
-    final initial = _parseNum(_initialController.text);
-    final monthly = _parseNum(_monthlyController.text);
-    final annual = _parseNum(_annualRateController.text);
-    final custody = _parseNum(_brokerageController.text);
+    double parseNum(String s) => double.tryParse(s.replaceAll('.', '').replaceAll(',', '.')) ?? 0.0;
+    final initial = parseNum(_initialController.text);
+    final monthly = parseNum(_monthlyController.text);
+    final annual = parseNum(_annualRateController.text);
+    final custody = parseNum(_brokerageController.text);
 
     final notifier = ref.read(inputParamsProvider.notifier);
     notifier.setInitialValue(initial);
