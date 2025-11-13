@@ -32,11 +32,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = theme.colorScheme.primary;
+  final theme = Theme.of(context);
+  final color = theme.colorScheme.primary;
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.surface,
+  backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -66,7 +66,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         Text(
                           'Comece a planejar seu futuro hoje mesmo.',
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.75)),
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.75),
+                          ),
                         ),
                         const SizedBox(height: 20),
 
@@ -151,8 +153,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
 
                         const SizedBox(height: 12),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Expanded(child: Divider()),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -206,7 +208,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         Text(
                           'Ao se cadastrar, você concorda com nossos Termos e Condições.',
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodySmall?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.7)),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Center(

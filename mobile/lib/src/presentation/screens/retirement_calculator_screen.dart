@@ -69,7 +69,7 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
         centerTitle: true,
         elevation: 0,
         scrolledUnderElevation: 0,
-        backgroundColor: (isDark ? bgDark : bgLight).withOpacity(0.8),
+  backgroundColor: (isDark ? bgDark : bgLight).withValues(alpha: 0.8),
         title: const Text(
           'Calculadora de Aposentadoria',
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -328,7 +328,7 @@ class _LabeledField extends StatelessWidget {
             border: border,
             enabledBorder: border,
             focusedBorder: border.copyWith(
-              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7)),
             ),
             filled: true,
             fillColor: Theme.of(context).brightness == Brightness.dark

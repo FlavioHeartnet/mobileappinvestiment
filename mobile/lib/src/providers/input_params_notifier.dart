@@ -1,9 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:state_notifier/state_notifier.dart';
 
-import '../models/investment_params.dart';
+import 'package:mobile/src/models/investment_params.dart';
 
 class InputParamsNotifier extends StateNotifier<InvestmentParamsModel> {
     InputParamsNotifier()

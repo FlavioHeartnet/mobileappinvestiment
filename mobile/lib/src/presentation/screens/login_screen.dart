@@ -28,7 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final ok = await notifier.login(user, pass);
     if (ok) {
       if (mounted) {
-        Navigator.of(context).pushNamed("/calculator");
+        Navigator.of(context).pushNamed('/calculator');
       }
     }
   }
@@ -37,10 +37,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(authProvider);
     final theme = Theme.of(context);
-  final color = theme.colorScheme.primary;
+    final color = theme.colorScheme.primary;
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -70,7 +70,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Text(
                           'Faça login para continuar',
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.75)),
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.75),
+                          ),
                         ),
                         const SizedBox(height: 20),
 

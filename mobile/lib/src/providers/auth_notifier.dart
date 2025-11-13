@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/legacy.dart';
 
-import '../services/auth_service.dart';
+import 'package:mobile/src/services/auth_service.dart';
 
 class AuthState {
   final bool isAuthenticated;
@@ -23,7 +23,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier(this._service) : super(const AuthState());
 
   Future<bool> login(String username, String password) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true);
     try {
       final ok = await _service.login(username, password);
       state = state.copyWith(isLoading: false, isAuthenticated: ok, error: ok ? null : 'Credenciais inválidas');
@@ -37,7 +37,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
     await _service.logout();
-    state = const AuthState(isAuthenticated: false);
+  state = const AuthState();
   }
 }
 

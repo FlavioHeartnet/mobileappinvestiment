@@ -45,7 +45,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                         final card1 = Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.10),
+                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.10),
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: Column(
@@ -55,7 +55,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.85),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -79,7 +79,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
+                                color: Colors.black.withValues(alpha: 0.04),
                                 blurRadius: 6,
                                 offset: const Offset(0, 2),
                               )
@@ -92,7 +92,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.85),
+                                  color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.85),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -136,7 +136,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 2)),
+                            BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 6, offset: const Offset(0, 2)),
                           ],
                         ),
                         child: Column(
@@ -182,7 +182,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 1))],
+                      boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 4, offset: const Offset(0, 1))],
                     ),
                     child: Row(
                       children: [
@@ -194,7 +194,7 @@ class ResultsDetailsScreen extends ConsumerWidget {
                           flex: 5,
                           child: Text(
                             'Juros: ${Formatters.money(m.interestEarned)}  •  Imposto: ${Formatters.money(m.govTaxPaid)}  •  Custódia: ${Formatters.money(m.custodyTaxPaid)}',
-                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.75)),
+                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.75)),
                           ),
                         ),
                         Expanded(flex: 4, child: Text(Formatters.money(m.cumulativeTotal), textAlign: TextAlign.end)),

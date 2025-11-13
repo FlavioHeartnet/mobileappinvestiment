@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
-import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/login_screen.dart';
+import 'package:mobile/src/presentation/screens/results_details_screen.dart';
+import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
 import 'package:mobile/src/presentation/screens/signup_screen.dart';
 
 void main() {
