@@ -22,8 +22,11 @@ class AuthService {
         email: email,
         password: password,
       );
-      // Update the user's display name
-      await userCredential.user?.updateDisplayName(name);
+      // Update the user's display name if the user object is available
+      final user = userCredential.user;
+      if (user != null) {
+        await user.updateDisplayName(name);
+      }
       return true;
     } on FirebaseAuthException catch (e) {
       throw _getErrorMessage(e);
@@ -33,13 +36,12 @@ class AuthService {
   /// Sign in with Google
   Future<bool> signInWithGoogle() async {
     try {
+      // Trigger the Google Sign-In flow (library exposes `authenticate` in this project)
       final googleUser = await _googleSignIn.authenticate();
-      if (googleUser == null) return false; // User cancelled the sign-in
 
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
+      // Obtain the auth details from the request (this version provides idToken)
+      final googleAuth = googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
 
       await _firebaseAuth.signInWithCredential(credential);
       return true;

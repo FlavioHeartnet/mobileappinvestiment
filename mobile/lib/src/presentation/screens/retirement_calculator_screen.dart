@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/src/providers/input_params_notifier.dart';
+import 'package:mobile/src/providers/auth_notifier.dart';
 // results are shown on a separate screen; no direct import here
 
 class RetirementCalculatorScreen extends ConsumerStatefulWidget {
@@ -76,9 +77,21 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.login),
-            tooltip: 'Entrar',
-            onPressed: () => Navigator.of(context).pushNamed('/login'),
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sair',
+            onPressed: () async {
+              final auth = ref.read(authProvider.notifier);
+              final navigator = Navigator.of(context);
+              final messenger = ScaffoldMessenger.of(context);
+              try {
+                await auth.logout();
+                if (!mounted) return;
+                navigator.pushNamedAndRemoveUntil('/login', (route) => false);
+              } catch (e) {
+                if (!mounted) return;
+                messenger.showSnackBar(SnackBar(content: Text('Erro ao sair: $e')));
+              }
+            },
           ),
         ],
       ),
