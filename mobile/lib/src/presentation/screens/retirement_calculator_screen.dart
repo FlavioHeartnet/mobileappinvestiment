@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/src/providers/input_params_notifier.dart';
 import 'package:mobile/src/providers/auth_notifier.dart';
+import 'package:mobile/src/providers/input_params_notifier.dart';
 // results are shown on a separate screen; no direct import here
 
 class RetirementCalculatorScreen extends ConsumerStatefulWidget {

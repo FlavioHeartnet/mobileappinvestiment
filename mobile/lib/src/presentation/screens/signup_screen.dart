@@ -59,7 +59,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final notifier = ref.read(authProvider.notifier);
     final ok = await notifier.signup(name, email, pass);
     if (ok && mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil('/confirmation-signup', (route) => false);
     }
   }
 

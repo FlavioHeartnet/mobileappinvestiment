@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/firebase_options.dart';
+import 'package:mobile/src/presentation/screens/confirmation_signup_screen.dart';
 import 'package:mobile/src/presentation/screens/login_screen.dart';
 import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
@@ -117,6 +118,7 @@ class AppRoot extends StatelessWidget {
         '/results': (context) => const ResultsDetailsScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
+        '/confirmation-signup': (context) => const ConfirmationSignupScreen(),
       },
     );
   }

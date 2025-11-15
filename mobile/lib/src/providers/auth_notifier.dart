@@ -34,7 +34,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier(this._service) : super(const AuthState());
 
   Future<bool> login(String email, String password) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true);
     try {
       final ok = await _service.login(email, password);
       state = state.copyWith(
@@ -54,7 +54,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> signup(String name, String email, String password) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true);
     try {
       final ok = await _service.signup(name, email, password);
       state = state.copyWith(
@@ -74,7 +74,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> signInWithGoogle() async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true);
     try {
       final ok = await _service.signInWithGoogle();
       final currentUser = _service.getCurrentUser();

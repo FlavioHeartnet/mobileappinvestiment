@@ -102,7 +102,7 @@ Final Effective Aliquot (%)
 - [x] Implement a new screen `RetirementCalculatorScreen` that replicates the HTML layout (header, inputs, slider, action buttons, result cards, and details grid) using Flutter widgets.
 - [x] Wire the new screen as the first tab, replacing `InvestmentInputScreen` temporarily for visual parity.
 - [x] Fetch packages and run static analysis to ensure the project builds.
-- [ ] Run the application on android device if have one or in web and verify the new UI matches the HTML design.
+- [x] Run the application on android device if have one or in web and verify the new UI matches the HTML design.
 
 ## Epic: 6. Dedicated Results Screen & Navigation
 
@@ -114,14 +114,22 @@ Final Effective Aliquot (%)
 - [ ] Remove the inline results section from `RetirementCalculatorScreen` once the dedicated screen is functional.
 - [ ] Manual QA: verify scroll behavior, dark/light themes, and parity with `code.html` on both screens.
 
-## Epic: 7. Authorization (New Feature)
 
-- [ ] Design a Cupertino-style `LoginScreen` with username and password fields, clear UX, and keyboard dismissal.
-- [ ] Create a simple `AuthService` (local) that simulates login/logout for prototyping and tests.
-- [ ] Create an `AuthNotifier` (StateNotifier) + `authProvider` to manage auth state and expose login/logout methods.
-- [ ] Integrate `LoginScreen` into the app (present modally or add a named route `/login`).
-- [ ] Add unit tests for `AuthService` and `AuthNotifier` (happy path + invalid credentials).
+### Epic: 7: match HTML login layout using app theme
 
-### New: match HTML login layout using app theme
+- [x] Implement `LoginScreen` UI to reproduce `specs/001-project-retirement-returns/html/login.html` visual layout (centered card, headline "Bem-vindo(a) de volta!", subtitle, email/password inputs, primary action, Google action, "OU" divider and links), BUT use the app's `colorScheme` and `fontFamily` (Manrope) as defined in `lib/main.dart` so the screen integrates with the app theme and color tokens.
 
-- [ ] Implement `LoginScreen` UI to reproduce `specs/001-project-retirement-returns/html/login.html` visual layout (centered card, headline "Bem-vindo(a) de volta!", subtitle, email/password inputs, primary action, Google action, "OU" divider and links), BUT use the app's `colorScheme` and `fontFamily` (Manrope) as defined in `lib/main.dart` so the screen integrates with the app theme and color tokens.
+## Epic: 8. Firebase Signup Integration
+
+- [ ] Implement Firebase Auth signup flow
+
+  - Update `mobile/lib/src/services/auth_service.dart` (or `auth_notifier.dart`) to create users using Firebase Auth SDK (`createUserWithEmailAndPassword`). Ensure displayName is set when provided.
+  - Ensure errors are surfaced to the UI (translate FirebaseAuthException codes to friendly messages).
+  - Keep `SignupScreen` using `authProvider.notifier.signup(...)` but make the notifier call into the Firebase-backed `AuthService`.
+  - Add loading state handling and disable inputs while the request is in-flight.
+  - Add a small integration smoke test (or manual verification steps) showing signup works on web or emulator.
+  - Run `flutter analyze` and address any issues.
+
+Notes:
+
+- This feature requires the Firebase SDK to be configured for the targets you plan to run (web/emulator/android). If Firebase isn't configured yet in the project, document the quick setup steps in the checklist and add them as preconditions before attempting runtime verification.
