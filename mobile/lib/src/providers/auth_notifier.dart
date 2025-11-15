@@ -123,9 +123,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
       return ok;
     } catch (e) {
+      // Prefer the thrown message when it's already a user-friendly string,
+      // otherwise use a Portuguese fallback.
+      final message = e is String
+          ? e
+          : 'Falha ao entrar com o Google. Verifique sua conexão e tente novamente.';
       state = state.copyWith(
         isLoading: false,
-        error: e.toString(),
+        error: message,
       );
       return false;
     }

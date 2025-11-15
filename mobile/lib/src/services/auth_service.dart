@@ -36,6 +36,7 @@ class AuthService {
   /// Sign in with Google
   Future<bool> signInWithGoogle() async {
     try {
+      await _googleSignIn.initialize();
       // Trigger the Google Sign-In flow (library exposes `authenticate` in this project)
       final googleUser = await _googleSignIn.authenticate();
 

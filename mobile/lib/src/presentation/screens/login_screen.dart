@@ -41,7 +41,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final notifier = ref.read(authProvider.notifier);
     final ok = await notifier.signInWithGoogle();
     if (ok && mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+      Navigator.of(context).pushReplacementNamed('/calculator');
+      return;
+    }
+
+    // Show friendly error in a SnackBar (Portuguese). Use notifier state error
+    // when available, otherwise a sensible default.
+    if (mounted) {
+      final state = ref.read(authProvider);
+      final message = state.error ?? 'Falha ao entrar com o Google. Tente novamente.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     }
   }
 

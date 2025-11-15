@@ -68,6 +68,15 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final ok = await notifier.signInWithGoogle();
     if (ok && mounted) {
       Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (route) => false);
+      return;
+    }
+
+    if (mounted) {
+      final state = ref.read(authProvider);
+      final message = state.error ?? 'Falha ao entrar com o Google. Tente novamente.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     }
   }
 
