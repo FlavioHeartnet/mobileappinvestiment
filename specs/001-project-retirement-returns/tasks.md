@@ -130,6 +130,29 @@ Final Effective Aliquot (%)
   - Add a small integration smoke test (or manual verification steps) showing signup works on web or emulator.
   - Run `flutter analyze` and address any issues.
 
-Notes:
+## Epic: 9. Forgot Password flow
 
 - This feature requires the Firebase SDK to be configured for the targets you plan to run (web/emulator/android). If Firebase isn't configured yet in the project, document the quick setup steps in the checklist and add them as preconditions before attempting runtime verification.
+
+Forgot-password flow & Password Reset — change log
+
+This file records the updates and marks completed sub-tasks that were implemented but could not be written into `tasks.md` due to an editor error.
+
+Completed items:
+
+- Add "Esqueceu a Senha?" flow with UI and Firebase integration
+
+  - Create `mobile/lib/src/presentation/screens/forgot_password_screen.dart` (email input, submit button, UX matching `specs/001-project-retirement-returns/html/forgotpassword.html`).
+  - Add `AuthService.sendPasswordResetEmail(String email)` that calls FirebaseAuth.sendPasswordResetEmail and maps FirebaseAuthException to friendly messages.
+  - Expose `sendPasswordResetEmail` via `AuthNotifier.sendPasswordResetEmail(...)` and persist last requested email.
+  - Create `mobile/lib/src/presentation/screens/forgot_password_confirmation_screen.dart` (confirmation UI matching `specs/001-project-retirement-returns/html/forgotpassconfir.html`).
+  - Add route `/forgot-password` and `/forgot-password-confirmation` in `mobile/lib/main.dart` and wire navigation from `LoginScreen`.
+  - Implement resend action on the confirmation screen using `AuthNotifier.resendPasswordResetEmail()` and show user feedback.
+  - Run `flutter analyze` and fix deprecation/ordering lints (replace withOpacity with withValues, use surface color token, sort imports).
+  - Commit changes with descriptive message.
+
+Notes:
+
+- The last requested email is stored in memory in `AuthNotifier.lastRequestedEmail`. If you want it persisted across app restarts, consider adding secure storage or shared_preferences.
+
+- I attempted to append this section to `specs/001-project-retirement-returns/tasks.md` but the repository edit tool returned an error. If you want I can retry editing `tasks.md` directly or you can paste this section into it.
