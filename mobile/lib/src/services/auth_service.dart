@@ -58,6 +58,16 @@ class AuthService {
     ]);
   }
 
+  /// Send password reset email
+  Future<bool> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      throw _getErrorMessage(e);
+    }
+  }
+
   /// Get the current user
   User? getCurrentUser() {
     return _firebaseAuth.currentUser;

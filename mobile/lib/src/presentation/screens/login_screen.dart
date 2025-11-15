@@ -116,7 +116,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => Navigator.of(context).pushNamed('/forgot-password'),
                             child: Text('Esqueceu a senha?', style: TextStyle(color: color)),
                           ),
                         ),

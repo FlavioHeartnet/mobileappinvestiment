@@ -33,6 +33,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _service;
   AuthNotifier(this._service) : super(const AuthState());
 
+  String? _lastRequestedEmail;
+
+  /// Returns the last email used to request a password reset, if any.
+  String? get lastRequestedEmail => _lastRequestedEmail;
+
   Future<bool> login(String email, String password) async {
     state = state.copyWith(isLoading: true);
     try {
@@ -69,6 +74,38 @@ class AuthNotifier extends StateNotifier<AuthState> {
         isLoading: false,
         error: e.toString(),
       );
+      return false;
+    }
+  }
+
+  /// Send password reset email using AuthService
+  Future<bool> sendPasswordResetEmail(String email) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      // persist the requested email for later resend
+      _lastRequestedEmail = email;
+      final ok = await _service.sendPasswordResetEmail(email);
+      state = state.copyWith(isLoading: false, error: ok ? null : 'Falha ao enviar email');
+      return ok;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
+
+  /// Resend the password reset email using the last requested email.
+  Future<bool> resendPasswordResetEmail() async {
+    if (_lastRequestedEmail == null) {
+      state = state.copyWith(error: 'Nenhum e-mail registrado para reenviar.');
+      return false;
+    }
+    state = state.copyWith(isLoading: true);
+    try {
+      final ok = await _service.sendPasswordResetEmail(_lastRequestedEmail!);
+      state = state.copyWith(isLoading: false, error: ok ? null : 'Falha ao reenviar email');
+      return ok;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
       return false;
     }
   }
