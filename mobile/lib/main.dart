@@ -4,12 +4,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/firebase_options.dart';
 import 'package:mobile/src/presentation/screens/confirmation_signup_screen.dart';
+import 'package:mobile/src/presentation/screens/forgot_password_confirmation_screen.dart';
+import 'package:mobile/src/presentation/screens/forgot_password_screen.dart';
 import 'package:mobile/src/presentation/screens/login_screen.dart';
 import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
 import 'package:mobile/src/presentation/screens/signup_screen.dart';
-import 'package:mobile/src/presentation/screens/forgot_password_screen.dart';
-import 'package:mobile/src/presentation/screens/forgot_password_confirmation_screen.dart';
 import 'package:mobile/src/providers/auth_notifier.dart';
 
 Future<void> main() async {

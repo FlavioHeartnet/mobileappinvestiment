@@ -23,7 +23,7 @@ class ForgotPasswordConfirmationScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -32,18 +32,16 @@ class ForgotPasswordConfirmationScreen extends ConsumerWidget {
               constraints: const BoxConstraints(maxWidth: 480),
               child: Card(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         height: 80,
                         width: 80,
                         decoration: BoxDecoration(
-                          color: color.withOpacity(0.10),
+                          color: color.withValues(alpha: 0.10),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.mark_email_read, size: 44, color: color),
@@ -58,7 +56,7 @@ class ForgotPasswordConfirmationScreen extends ConsumerWidget {
                       Text(
                         'Enviamos um link para redefinir sua senha para ${maskedEmail(email)}. Pode levar alguns minutos para chegar. Não se esqueça de verificar sua caixa de spam.',
                         textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color?.withOpacity(0.75)),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.75)),
                       ),
                       const SizedBox(height: 24),
                       SizedBox(
