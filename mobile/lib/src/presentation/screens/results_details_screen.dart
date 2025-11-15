@@ -108,8 +108,12 @@ class ResultsDetailsScreen extends ConsumerWidget {
                         );
 
                         if (isWide) {
+                          // Don't stretch children vertically here — the surrounding
+                          // Column/Sliver layout can provide unbounded height on large
+                          // viewports. Use start so children size to their intrinsic
+                          // height and Expanded only affects horizontal sizing.
                           return Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(child: Container(margin: const EdgeInsets.only(right: 12), child: card1)),
                               Expanded(child: Container(margin: const EdgeInsets.only(left: 12), child: card2)),
