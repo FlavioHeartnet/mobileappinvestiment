@@ -64,7 +64,7 @@ Future<void> showSubscriptionPlanSheet(BuildContext context) {
                           height: 4,
                           margin: const EdgeInsets.symmetric(horizontal: 120),
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.onSurface.withOpacity(0.2),
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(999),
                           ),
                         ),
@@ -106,13 +106,13 @@ Future<void> showSubscriptionPlanSheet(BuildContext context) {
                           style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
-                        _BenefitRow(icon: Icons.insights, text: 'Planejamento de aposentadoria ilimitado'),
+                        const _BenefitRow(icon: Icons.insights, text: 'Planejamento de aposentadoria ilimitado'),
                         _Separator(),
-                        _BenefitRow(icon: Icons.donut_small, text: 'Análise de todos os seus investimentos'),
+                        const _BenefitRow(icon: Icons.donut_small, text: 'Análise de todos os seus investimentos'),
                         _Separator(),
-                        _BenefitRow(icon: Icons.query_stats, text: 'Simulador de cenários futuros'),
+                        const _BenefitRow(icon: Icons.query_stats, text: 'Simulador de cenários futuros'),
                         _Separator(),
-                        _BenefitRow(icon: Icons.support_agent, text: 'Suporte prioritário'),
+                        const _BenefitRow(icon: Icons.support_agent, text: 'Suporte prioritário'),
                         const SizedBox(height: 24),
                         Text(
                           'Cancele a qualquer momento. A cobrança será iniciada automaticamente após o período de teste de 14 dias, a menos que seja cancelada. Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.',
@@ -144,9 +144,9 @@ class _AnnualPlanCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: primary.withOpacity(Theme.of(context).brightness == Brightness.dark ? 0.20 : 0.10),
+        color: primary.withValues(alpha: Theme.of(context).brightness == Brightness.dark ? 0.20 : 0.10),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: primary, width: 1),
+        border: Border.all(color: primary),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -201,8 +201,8 @@ class _AnnualPlanCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          _CheckRow(text: 'equivalente a R\$ 14,99 por mês'),
-          _CheckRow(text: '14 dias grátis'),
+          const _CheckRow(text: 'equivalente a R\$ 14,99 por mês'),
+          const _CheckRow(text: '14 dias grátis'),
         ],
       ),
     );
@@ -264,7 +264,7 @@ class _MonthlyPlanCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          _CheckRow(text: '14 dias grátis'),
+          const _CheckRow(text: '14 dias grátis'),
         ],
       ),
     );
