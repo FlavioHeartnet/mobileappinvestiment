@@ -11,6 +11,7 @@ import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
 import 'package:mobile/src/presentation/screens/signup_screen.dart';
 import 'package:mobile/src/presentation/screens/profile_screen.dart';
+import 'package:mobile/src/presentation/screens/subscription_plan_screen.dart';
 import 'package:mobile/src/providers/auth_notifier.dart';
 
 Future<void> main() async {
@@ -120,6 +121,7 @@ class AppRoot extends StatelessWidget {
         '/calculator': (context) => const RetirementCalculatorScreen(),
         '/results': (context) => const ResultsDetailsScreen(),
         '/profile': (context) => const ProfileScreen(),
+        '/plans': (context) => const SubscriptionPlanScreen(),
         '/login': (context) => const LoginScreen(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/forgot-password-confirmation': (context) => const ForgotPasswordConfirmationScreen(),

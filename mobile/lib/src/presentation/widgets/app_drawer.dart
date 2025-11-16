@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/src/providers/auth_notifier.dart';
@@ -21,7 +22,26 @@ class AppDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-  final email = ref.watch(authProvider).userEmail;
+  final emailFromState = ref.watch(authProvider).userEmail;
+  final user = FirebaseAuth.instance.currentUser;
+  final dn = user?.displayName;
+  final displayName = (dn != null && dn.trim().isNotEmpty) ? dn : 'Meu Perfil';
+  final email = user?.email ?? emailFromState ?? 'usuario@exemplo.com';
+  final photoUrl = user?.photoURL;
+  final initials = () {
+    String source = displayName.trim();
+    if (source.isEmpty || source == 'Meu Perfil') {
+      source = email.split('@').first;
+    }
+    final parts = source
+        .split(RegExp(r'[^A-Za-zÀ-ÖØ-öø-ÿ0-9]+'))
+        .where((s) => s.isNotEmpty)
+        .toList();
+    if (parts.isEmpty) return 'U';
+    final first = parts[0][0];
+    final second = parts.length > 1 ? parts[1][0] : '';
+    return (first + second).toUpperCase();
+  }();
 
     return Drawer(
       child: SafeArea(
@@ -35,11 +55,22 @@ class AppDrawer extends ConsumerWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 28,
-                    backgroundImage: NetworkImage(
-                      'https://lh3.googleusercontent.com/aida-public/AB6AXuBvQ68ttm17aM9OVCIY58CkZm5fs6WLRmeAIqMYdHisddEf3E_RvKKuhiOzRb8xQwfFHF3nxiSvwWEpczy_jmbqM0-_fk6gQsPmkw4T8k0e2vNrE93c5aM10yZewXg9DANprmQxieC1VlEZVCVX7htk5E4z47Xg4Vcu439YTQl__EgxC1OpvtUitpB0gYxkkBYsRg-wcN9zfO3NjAp0pYnbnokEyBmDdUNGK0pkWZ2vfffK5_rlUQYVtdn_rQbswwUwLbf_wFttWfed',
-                    ),
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                    backgroundImage: (photoUrl != null && photoUrl.isNotEmpty)
+                        ? NetworkImage(photoUrl)
+                        : null,
+                    child: (photoUrl == null || photoUrl.isEmpty)
+                        ? Text(
+                            initials,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          )
+                        : null,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -47,12 +78,12 @@ class AppDrawer extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Meu Perfil',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                        Text(
+                          displayName,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         Text(
-                          email ?? 'usuario@exemplo.com',
+                          email,
                           style: const TextStyle(color: Colors.white70),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -76,6 +107,14 @@ class AppDrawer extends ConsumerWidget {
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushNamed('/calculator');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.workspace_premium_outlined),
+              title: const Text('Planos de Assinatura'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/plans');
               },
             ),
             const Divider(),
