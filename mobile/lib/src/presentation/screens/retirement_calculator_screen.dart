@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/src/providers/auth_notifier.dart';
+import 'package:mobile/src/presentation/widgets/app_drawer.dart';
 import 'package:mobile/src/providers/input_params_notifier.dart';
 // results are shown on a separate screen; no direct import here
 
@@ -66,6 +66,7 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
 
   return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
+      drawer: const AppDrawer(),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -75,25 +76,7 @@ class _RetirementCalculatorScreenState extends ConsumerState<RetirementCalculato
           'Calculadora de Aposentadoria',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Sair',
-            onPressed: () async {
-              final auth = ref.read(authProvider.notifier);
-              final navigator = Navigator.of(context);
-              final messenger = ScaffoldMessenger.of(context);
-              try {
-                await auth.logout();
-                if (!mounted) return;
-                navigator.pushNamedAndRemoveUntil('/login', (route) => false);
-              } catch (e) {
-                if (!mounted) return;
-                messenger.showSnackBar(SnackBar(content: Text('Erro ao sair: $e')));
-              }
-            },
-          ),
-        ],
+        // The Drawer provides navigation and logout
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

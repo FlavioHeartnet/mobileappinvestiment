@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Plano de Assinatura</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#5D87FF",
+            "background-light": "#f7f8f9",
+            "background-dark": "#121212",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-2xl">close</span>
+</div>
+</div>
+<!-- HeadlineText -->
+<h1 class="text-slate-900 dark:text-white tracking-tight text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6">Acesso completo para planejar sua aposentadoria</h1>
+<!-- PricingCards -->
+<div class="flex flex-col gap-4 px-4 py-3">
+<!-- Annual Plan Card -->
+<div class="flex flex-1 flex-col gap-4 rounded-xl border border-primary bg-primary/10 dark:bg-primary/20 p-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Anual</h2>
+<p class="text-background-dark text-xs font-medium leading-normal tracking-[0.015em] rounded-full bg-primary px-3 py-1 text-center">Mais vantajoso</p>
+</div>
+<p class="flex items-baseline gap-1 text-slate-900 dark:text-white">
+<span class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">R$ 179,90</span>
+<span class="text-slate-900 dark:text-white text-base font-bold leading-tight">/ano</span>
+</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Escolher Plano Anual</span>
+</button>
+<div class="flex flex-col gap-2">
+<div class="text-[13px] font-normal leading-normal flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+            equivalente a R$ 14,99 por mês
+          </div>
+<div class="text-[13px] font-normal leading-normal flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+            14 dias grátis
+          </div>
+</div>
+</div>
+<!-- Monthly Plan Card -->
+<div class="flex flex-1 flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 p-6">
+<div class="flex flex-col gap-1">
+<h2 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Mensal</h2>
+<p class="flex items-baseline gap-1 text-slate-900 dark:text-white">
+<span class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">R$ 19,90</span>
+<span class="text-slate-900 dark:text-white text-base font-bold leading-tight">/mês</span>
+</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Escolher Plano Mensal</span>
+</button>
+<div class="flex flex-col gap-2">
+<div class="text-[13px] font-normal leading-normal flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+            14 dias grátis
+          </div>
+</div>
+</div>
+</div>
+<!-- SectionHeader -->
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Benefícios da assinatura</h3>
+<!-- List of Benefits -->
+<div class="flex flex-col px-4">
+<div class="flex items-center gap-4 py-3 border-b border-slate-200 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">insights</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-base font-normal leading-normal flex-1">Planejamento de aposentadoria ilimitado</p>
+</div>
+<div class="flex items-center gap-4 py-3 border-b border-slate-200 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">donut_small</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-base font-normal leading-normal flex-1">Análise de todos os seus investimentos</p>
+</div>
+<div class="flex items-center gap-4 py-3 border-b border-slate-200 dark:border-slate-800">
+<div class="text-primary flex items-center justify-center shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">query_stats</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-base font-normal leading-normal flex-1">Simulador de cenários futuros</p>
+</div>
+<div class="flex items-center gap-4 py-3">
+<div class="text-primary flex items-center justify-center shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">support_agent</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-base font-normal leading-normal flex-1">Suporte prioritário</p>
+</div>
+</div>
+<!-- Legal Text -->
+<div class="px-4 pt-8 pb-10">
+<p class="text-slate-500 dark:text-slate-400 text-xs text-center leading-relaxed">
+        Cancele a qualquer momento. A cobrança será iniciada automaticamente após o período de teste de 14 dias, a menos que seja cancelada. Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.
+      </p>
+</div>
+</div>
+</body></html>
