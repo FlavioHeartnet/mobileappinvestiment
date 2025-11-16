@@ -111,7 +111,7 @@ class ProfileScreen extends ConsumerWidget {
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.red.shade600,
-                side: BorderSide(color: Colors.red.shade400.withOpacity(0.6)),
+                side: BorderSide(color: Colors.red.shade400.withValues(alpha: 0.6)),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
@@ -142,7 +142,7 @@ class _ProfileAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -150,7 +150,7 @@ class _ProfileAvatar extends StatelessWidget {
       ),
       child: CircleAvatar(
         radius: 56,
-        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.15),
+        backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
         backgroundImage: (photoUrl != null && photoUrl!.isNotEmpty)
             ? NetworkImage(photoUrl!)
             : null,
@@ -172,16 +172,16 @@ class _PlanCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.25),
+            color: color.withValues(alpha: 0.25),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
         ],
       ),
       padding: const EdgeInsets.all(20),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
             'Seu Plano',
             style: TextStyle(color: Colors.white70),
@@ -208,9 +208,9 @@ class _PriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
+      children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

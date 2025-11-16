@@ -53,11 +53,10 @@ class AppDrawer extends ConsumerWidget {
                 color: Theme.of(context).colorScheme.primary,
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
                     radius: 28,
-                    backgroundColor: Colors.white.withOpacity(0.2),
+                    backgroundColor: Colors.white.withValues(alpha: 0.2),
                     backgroundImage: (photoUrl != null && photoUrl.isNotEmpty)
                         ? NetworkImage(photoUrl)
                         : null,
