@@ -38,6 +38,12 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            // Disable code shrinking for now to avoid R8 missing-class issues
+            // with transitive Stripe native classes. For production builds you
+            // should enable shrinking and add proper keep rules in
+            // proguard-rules.pro. See flutter_stripe README for details.
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
