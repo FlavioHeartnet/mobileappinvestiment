@@ -1,78 +1,139 @@
 import 'package:flutter/material.dart';
 
-class SubscriptionPlanScreen extends StatelessWidget {
+/// Route shim that opens the plans as a modal action sheet (bottom sheet)
+class SubscriptionPlanScreen extends StatefulWidget {
   const SubscriptionPlanScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgLight = const Color(0xFFF7F8F9);
-    final bgDark = const Color(0xFF121212);
+  State<SubscriptionPlanScreen> createState() => _SubscriptionPlanScreenState();
+}
 
-    return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
-      appBar: AppBar(
-        centerTitle: false,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).maybePop(),
-          tooltip: 'Fechar',
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 8),
-            Text(
-              'Acesso completo para planejar sua aposentadoria',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    height: 1.15,
-                  ),
+class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Open the sheet after the first frame so we have a valid context
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showSubscriptionPlanSheet(context);
+      if (mounted) Navigator.of(context).pop();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Empty container; this route only exists to trigger the sheet
+    return const SizedBox.shrink();
+  }
+}
+
+Future<void> showSubscriptionPlanSheet(BuildContext context) {
+  final theme = Theme.of(context);
+  final bgLight = const Color(0xFFF7F8F9);
+  final bgDark = const Color(0xFF121212);
+  final baseBg = theme.brightness == Brightness.dark ? bgDark : bgLight;
+
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (ctx) {
+      return DraggableScrollableSheet(
+        initialChildSize: 0.92,
+        minChildSize: 0.6,
+        maxChildSize: 0.96,
+        expand: false,
+        builder: (_, controller) {
+          return Container(
+            decoration: BoxDecoration(
+              color: baseBg,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
             ),
-            const SizedBox(height: 12),
-            // Pricing Cards
-            Column(
+            child: Column(
               children: [
-                _AnnualPlanCard(),
-                const SizedBox(height: 12),
-                _MonthlyPlanCard(),
+                // Grab handle + close
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 4),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 4,
+                          margin: const EdgeInsets.symmetric(horizontal: 120),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.onSurface.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.of(context).maybePop(),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: controller,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 8),
+                        Text(
+                          'Acesso completo para planejar sua aposentadoria',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                height: 1.15,
+                              ),
+                        ),
+                        const SizedBox(height: 12),
+                        Column(
+                          children: [
+                            _AnnualPlanCard(),
+                            const SizedBox(height: 12),
+                            _MonthlyPlanCard(),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'Benefícios da assinatura',
+                          style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        _BenefitRow(icon: Icons.insights, text: 'Planejamento de aposentadoria ilimitado'),
+                        _Separator(),
+                        _BenefitRow(icon: Icons.donut_small, text: 'Análise de todos os seus investimentos'),
+                        _Separator(),
+                        _BenefitRow(icon: Icons.query_stats, text: 'Simulador de cenários futuros'),
+                        _Separator(),
+                        _BenefitRow(icon: Icons.support_agent, text: 'Suporte prioritário'),
+                        const SizedBox(height: 24),
+                        Text(
+                          'Cancele a qualquer momento. A cobrança será iniciada automaticamente após o período de teste de 14 dias, a menos que seja cancelada. Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                                height: 1.4,
+                              ),
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 24),
-            Text(
-              'Benefícios da assinatura',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            _BenefitRow(icon: Icons.insights, text: 'Planejamento de aposentadoria ilimitado'),
-            _Separator(),
-            _BenefitRow(icon: Icons.donut_small, text: 'Análise de todos os seus investimentos'),
-            _Separator(),
-            _BenefitRow(icon: Icons.query_stats, text: 'Simulador de cenários futuros'),
-            _Separator(),
-            _BenefitRow(icon: Icons.support_agent, text: 'Suporte prioritário'),
-            const SizedBox(height: 24),
-            Text(
-              'Cancele a qualquer momento. A cobrança será iniciada automaticamente após o período de teste de 14 dias, a menos que seja cancelada. Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    height: 1.4,
-                  ),
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
-    );
-  }
+          );
+        },
+      );
+    },
+  );
 }
 
 class _AnnualPlanCard extends StatelessWidget {
