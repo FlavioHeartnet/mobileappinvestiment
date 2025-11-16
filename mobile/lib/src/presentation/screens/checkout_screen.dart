@@ -18,6 +18,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool _loading = false;
   String _cardBrand = 'unknown';
   String _selectedPlan = 'monthly';
+  bool _initializedArgs = false;
 
   final _cardNumberController = TextEditingController();
   final _cardHolderController = TextEditingController();
@@ -59,6 +60,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _expiryController.dispose();
     _cvvController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initializedArgs) return;
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is Map) {
+      final planArg = args['plan'];
+      if (planArg is String) {
+        final plan = planArg.toLowerCase();
+        if (plan == 'annual' || plan == 'monthly') {
+          _selectedPlan = plan;
+        }
+      }
+    }
+    _initializedArgs = true;
   }
 
   @override

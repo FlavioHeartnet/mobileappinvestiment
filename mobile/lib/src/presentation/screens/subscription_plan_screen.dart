@@ -14,7 +14,12 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     super.initState();
     // Open the sheet after the first frame so we have a valid context
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await showSubscriptionPlanSheet(context);
+      final selected = await showSubscriptionPlanSheet(context);
+      if (!mounted) return;
+      if (selected != null) {
+        // Navigate to checkout with the chosen plan
+        Navigator.of(context).pushNamed('/checkout', arguments: {'plan': selected});
+      }
       if (mounted) Navigator.of(context).pop();
     });
   }
@@ -26,7 +31,7 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
   }
 }
 
-Future<void> showSubscriptionPlanSheet(BuildContext context) {
+Future<String?> showSubscriptionPlanSheet(BuildContext context) {
   final theme = Theme.of(context);
   final bgLight = const Color(0xFFF7F8F9);
   final bgDark = const Color(0xFF121212);
@@ -196,7 +201,7 @@ class _AnnualPlanCard extends StatelessWidget {
             height: 48,
             width: double.infinity,
             child: FilledButton(
-              onPressed: () => _onChoose(context, 'Anual'),
+              onPressed: () => _onChoose(context, 'annual'),
               child: const Text('Escolher Plano Anual', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
@@ -209,9 +214,8 @@ class _AnnualPlanCard extends StatelessWidget {
   }
 
   void _onChoose(BuildContext context, String plan) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Plano $plan selecionado')),
-    );
+    // Close the bottom sheet returning the selected plan
+    Navigator.of(context).pushNamed('/checkout', arguments: {'plan': plan});
   }
 }
 
@@ -259,7 +263,7 @@ class _MonthlyPlanCard extends StatelessWidget {
                 foregroundColor: isDark ? Colors.white : Colors.black,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
-              onPressed: () => _onChoose(context, 'Mensal'),
+              onPressed: () => _onChoose(context, 'monthly'),
               child: const Text('Escolher Plano Mensal', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
@@ -271,9 +275,8 @@ class _MonthlyPlanCard extends StatelessWidget {
   }
 
   void _onChoose(BuildContext context, String plan) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Plano $plan selecionado')),
-    );
+    // Close the bottom sheet returning the selected plan
+    Navigator.of(context).pushNamed('/checkout', arguments: {'plan': plan});
   }
 }
 
