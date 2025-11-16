@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Finalizar Assinatura</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#5D87FF",
+              "background-light": "#f7f8f9",
+              "background-dark": "#121212",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<button class="text-gray-800 dark:text-white flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Finalize sua Assinatura</h1>
+<div class="size-12"></div> 
+</header>
+<main class="flex-1 px-4 pb-24">
+<section class="pt-4">
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-2">Seu Pedido</h2>
+<div class="bg-white/5 dark:bg-white/5 rounded-xl p-4 border border-white/10 dark:border-white/10">
+<div class="flex justify-between gap-x-6 py-2 border-b border-white/10">
+<p class="text-gray-400 dark:text-gray-400 text-sm font-normal leading-normal">Plano Anual Pro</p>
+<p class="text-gray-800 dark:text-white text-sm font-semibold leading-normal text-right">R$ 239,90</p>
+</div>
+<div class="flex justify-between gap-x-6 py-2 pt-3">
+<p class="text-gray-400 dark:text-gray-400 text-sm font-normal leading-normal">Total a pagar</p>
+<p class="text-gray-800 dark:text-white text-sm font-bold leading-normal text-right">R$ 239,90</p>
+</div>
+</div>
+</section>
+<section class="pt-6">
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-2">Escolha como pagar</h2>
+<div class="flex py-3">
+<div class="flex h-12 flex-1 items-center justify-center rounded-xl bg-black/10 dark:bg-black/20 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:shadow-lg has-[:checked]:shadow-primary/20 has-[:checked]:text-black text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Cartão Crédito/Débito</span>
+<input checked="" class="invisible w-0" name="payment-method" type="radio" value="credit-card"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:shadow-lg has-[:checked]:shadow-primary/20 has-[:checked]:text-black text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Google/Apple Pay</span>
+<input class="invisible w-0" name="payment-method" type="radio" value="wallet-pay"/>
+</label>
+</div>
+</div>
+</section>
+<section class="pt-4 space-y-4">
+<div class="relative">
+<label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" for="card-number">Número do Cartão</label>
+<input class="w-full rounded-lg border border-white/10 bg-black/10 dark:bg-black/20 p-3 text-gray-800 dark:text-white placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-colors" id="card-number" name="card-number" placeholder="0000 0000 0000 0000" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-10 text-gray-500">credit_card</span>
+</div>
+<div class="relative">
+<label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" for="card-holder">Nome do Titular</label>
+<input class="w-full rounded-lg border border-white/10 bg-black/10 dark:bg-black/20 p-3 text-gray-800 dark:text-white placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-colors" id="card-holder" name="card-holder" placeholder="Nome como no cartão" type="text"/>
+</div>
+<div class="flex gap-4">
+<div class="w-1/2">
+<label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" for="expiry-date">Validade</label>
+<input class="w-full rounded-lg border border-white/10 bg-black/10 dark:bg-black/20 p-3 text-gray-800 dark:text-white placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-colors" id="expiry-date" name="expiry-date" placeholder="MM/AA" type="text"/>
+</div>
+<div class="w-1/2 relative">
+<label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" for="cvv">CVV</label>
+<input class="w-full rounded-lg border border-white/10 bg-black/10 dark:bg-black/20 p-3 text-gray-800 dark:text-white placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-colors" id="cvv" name="cvv" placeholder="123" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-10 text-gray-500">lock</span>
+</div>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 border-t border-white/10">
+<div class="flex flex-col items-center gap-4">
+<button class="w-full rounded-full bg-primary py-4 text-center text-base font-bold text-black shadow-lg shadow-primary/20 transition-transform active:scale-95">
+                    Finalizar Pagamento
+                </button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-gray-500">lock</span>
+<p class="text-xs text-gray-500 dark:text-gray-400">Ambiente 100% seguro. Seus dados estão protegidos.</p>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

@@ -1,0 +1,15 @@
+{
+  "name": "simulador-server",
+  "version": "0.0.1",
+  "description": "Example server to create Stripe PaymentIntents for SimuladorInvestimento",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "stripe": "^12.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  }
+}

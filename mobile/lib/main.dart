@@ -2,11 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mobile/firebase_options.dart';
+import 'package:mobile/src/config/stripe_config.dart';
+import 'package:mobile/src/presentation/screens/checkout_screen.dart';
 import 'package:mobile/src/presentation/screens/confirmation_signup_screen.dart';
 import 'package:mobile/src/presentation/screens/forgot_password_confirmation_screen.dart';
 import 'package:mobile/src/presentation/screens/forgot_password_screen.dart';
 import 'package:mobile/src/presentation/screens/login_screen.dart';
+import 'package:mobile/src/presentation/screens/payment_confirm_screen.dart';
 import 'package:mobile/src/presentation/screens/profile_screen.dart';
 import 'package:mobile/src/presentation/screens/results_details_screen.dart';
 import 'package:mobile/src/presentation/screens/retirement_calculator_screen.dart';
@@ -19,6 +23,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Initialize Stripe with your publishable key. Replace the placeholder in
+  // `StripeConfig.publishableKey` with your publishable key (pk_test_...)
+  // Do NOT put your secret key here.
+  Stripe.publishableKey = StripeConfig.publishableKey;
+  await Stripe.instance.applySettings();
   runApp(const ProviderScope(child: AppRoot()));
 }
 
@@ -120,6 +129,7 @@ class AppRoot extends StatelessWidget {
       routes: {
         '/calculator': (context) => const RetirementCalculatorScreen(),
         '/results': (context) => const ResultsDetailsScreen(),
+  '/checkout': (context) => const CheckoutScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/plans': (context) => const SubscriptionPlanScreen(),
         '/login': (context) => const LoginScreen(),
@@ -127,6 +137,7 @@ class AppRoot extends StatelessWidget {
         '/forgot-password-confirmation': (context) => const ForgotPasswordConfirmationScreen(),
         '/signup': (context) => const SignupScreen(),
         '/confirmation-signup': (context) => const ConfirmationSignupScreen(),
+        '/payment-confirmation': (context) => const PaymentConfirmScreen(),
       },
     );
   }

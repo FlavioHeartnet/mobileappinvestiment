@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pagamento Confirmado</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#5D87FF",
+              "background-light": "#f7f8f9",
+              "background-dark": "#121212",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4">
+<div class="flex max-w-md flex-col items-center text-center">
+<!-- Success Icon -->
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary mb-6">
+<span class="material-symbols-outlined text-background-dark" style="font-size: 48px;">check</span>
+</div>
+<!-- HeadlineText -->
+<h1 class="text-[#f6f8f6] dark:text-white font-display text-3xl font-bold leading-tight tracking-tight text-center pb-3">Sua assinatura foi ativada!</h1>
+<!-- BodyText -->
+<p class="text-gray-300 dark:text-gray-400 font-display text-base font-normal leading-relaxed text-center pb-8 max-w-sm">
+        Agora você tem acesso a todas as ferramentas para planejar sua aposentadoria com tranquilidade.
+      </p>
+<!-- DescriptionList Card -->
+<div class="w-full rounded-xl bg-background-light dark:bg-black/20 p-4 border border-white/10 mb-8">
+<div class="flex justify-between gap-x-6 py-3 border-b border-white/10">
+<p class="text-[#92c992] dark:text-gray-400 font-display text-sm font-normal leading-normal">Plano</p>
+<p class="text-[#f6f8f6] dark:text-white font-display text-sm font-medium leading-normal text-right">Plano Premium - Anual</p>
+</div>
+<div class="flex justify-between gap-x-6 py-3 border-b border-white/10">
+<p class="text-[#92c992] dark:text-gray-400 font-display text-sm font-normal leading-normal">Valor</p>
+<p class="text-[#f6f8f6] dark:text-white font-display text-sm font-medium leading-normal text-right">R$ 299,90</p>
+</div>
+<div class="flex justify-between gap-x-6 py-3">
+<p class="text-[#92c992] dark:text-gray-400 font-display text-sm font-normal leading-normal">Próxima Cobrança</p>
+<p class="text-[#f6f8f6] dark:text-white font-display text-sm font-medium leading-normal text-right">25 de Julho de 2025</p>
+</div>
+</div>
+<!-- SingleButton -->
+<div class="flex w-full px-0 py-2">
+<button class="flex min-w-[84px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-background-dark font-display text-base font-bold leading-normal tracking-wide">
+<span class="truncate">Começar a Usar</span>
+</button>
+</div>
+<!-- Secondary Link -->
+<div class="flex px-4 py-3">
+<a class="text-primary/80 hover:text-primary font-display text-sm font-medium leading-normal" href="#">
+          Enviar recibo por e-mail
+        </a>
+</div>
+</div>
+</div>
+</body></html>
