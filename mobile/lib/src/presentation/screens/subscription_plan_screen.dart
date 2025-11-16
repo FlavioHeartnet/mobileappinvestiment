@@ -307,7 +307,7 @@ class _BenefitRow extends StatelessWidget {
 class _Separator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Divider(color: Theme.of(context).dividerColor.withOpacity(0.6), height: 1);
+    return Divider(color: Theme.of(context).dividerColor.withValues(alpha: 0.6), height: 1);
   }
 }
 
