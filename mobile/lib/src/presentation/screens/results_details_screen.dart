@@ -157,8 +157,8 @@ class ResultsDetailsScreen extends ConsumerWidget {
                                 spacing: 12,
                                 runSpacing: 12,
                                 children: [
-                                  _detailTile('Valor Total Investido', Formatters.money(data.totalPrincipal)),
-                                  _detailTile('Total (Antes do Imposto)', Formatters.money(data.totalPrincipal + data.totalInterest)),
+                                  _detailTile('Valor Total Investido', Formatters.money(data.totalPrincipal), valueColor: const Color.fromRGBO(93, 135, 255, 1)),
+                                  _detailTile('Total (Antes do Imposto)', Formatters.money(data.totalPrincipal + data.totalInterest), valueColor: const Color.fromRGBO(93, 135, 255, 1)),
                                   _detailTile('Juros', '+ ${Formatters.money(data.totalInterest)}', valueColor: Colors.green[600]),
                                   _detailTile('Imposto de Renda', '- ${Formatters.money(data.totalTaxes)}', valueColor: Colors.red[600]),
                                 ].map((w) {
