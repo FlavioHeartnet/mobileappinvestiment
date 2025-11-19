@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
 /// Route shim that opens the plans as a modal action sheet (bottom sheet)
 class SubscriptionPlanScreen extends StatefulWidget {
@@ -17,8 +21,8 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
       final selected = await showSubscriptionPlanSheet(context);
       if (!mounted) return;
       if (selected != null) {
-        // Navigate to checkout with the chosen plan
-        Navigator.of(context).pushNamed('/checkout', arguments: {'plan': selected});
+        // Start Stripe checkout flow for the chosen plan
+        await _startStripeCheckout(selected);
       }
       if (mounted) Navigator.of(context).pop();
     });
@@ -28,6 +32,122 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
   Widget build(BuildContext context) {
     // Empty container; this route only exists to trigger the sheet
     return const SizedBox.shrink();
+  }
+
+  Future<void> _startStripeCheckout(String plan) async {
+    try {
+      // 1) Request backend to create/init the Stripe Subscription/Intent
+      final initData = await _fetchStripeInitData(plan);
+
+      // 2) Initialize PaymentSheet for SetupIntent (recomendado para assinatura)
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          merchantDisplayName: 'Simulador Investimento',
+          customerId: initData.customerId,
+          customerEphemeralKeySecret: initData.ephemeralKeySecret,
+          setupIntentClientSecret: initData.clientSecret,
+          allowsDelayedPaymentMethods: true,
+        ),
+      );
+
+      // 3) Present PaymentSheet (Stripe UI)
+      await Stripe.instance.presentPaymentSheet();
+
+      // 4) Notify backend that payment/confirmation succeeded (if required)
+      /*await _notifyBackendSubscriptionConfirmed(
+        subscriptionId: initData.subscriptionId,
+        plan: plan,
+      );*/
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Assinatura ativada com sucesso!')),
+      );
+    } on StripeException catch (e) {
+      if (!mounted) return;
+      final message = e.error.localizedMessage ?? 'Ocorreu um erro no pagamento';
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Falha ao iniciar checkout: $e')));
+    } finally {
+      // no-op
+    }
+  }
+
+  Future<_StripeInitData> _fetchStripeInitData(String plan) async {
+    // TODO: Altere a URL abaixo para o endpoint real do seu backend
+    // O backend deve:
+    // - Criar (ou recuperar) o Customer
+    // - Criar a Subscription para o plano selecionado (annual | monthly)
+    // - Retornar:
+    //   - clientSecret (de um PaymentIntent OU SetupIntent)
+    //   - customerId
+    //   - ephemeralKeySecret (para o customer)
+    //   - subscriptionId
+    //   - mode: 'setup' | 'payment' (para sabermos qual PaymentSheet usar)
+    final uri = Uri.parse('https://8843b5123dce.ngrok-free.app/create-payment-intent');
+
+    final resp = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+        // Adicione auth header se necessário
+      },
+      body: jsonEncode({
+        'plan': plan,
+        // Se já tiver customerId no app, envie aqui; caso contrário backend cria
+      }),
+    );
+
+    if (resp.statusCode < 200 || resp.statusCode >= 300) {
+      throw Exception('Backend retornou ${resp.statusCode}: ${resp.body}');
+    }
+
+    final data = jsonDecode(resp.body) as Map<String, dynamic>;
+
+    final clientSecret = (data['clientSecret'] ?? data['client_secret']) as String?;
+    final customerId = (data['customerId'] ?? data['customer_id']) as String?;
+    final ephKey = (data['ephemeralKeySecret'] ?? data['ephemeral_key']) as String?;
+    final subscriptionId = (data['subscriptionId'] ?? data['subscription_id']) as String?;
+
+    if (clientSecret == null) {
+      throw Exception('clientSecret ausente na resposta do backend');
+    }
+    if (customerId == null) {
+      throw Exception('customerId ausente na resposta do backend');
+    }
+    if (subscriptionId == null) {
+      throw Exception('subscriptionId ausente na resposta do backend');
+    }
+    // Para PaymentSheet com customer, é necessário ephemeralKeySecret
+    if (ephKey == null || ephKey.isEmpty) {
+      throw Exception('ephemeralKeySecret ausente. Necessário para PaymentSheet com customer.');
+    }
+
+    return _StripeInitData(
+      clientSecret: clientSecret,
+      customerId: customerId,
+      ephemeralKeySecret: ephKey,
+      subscriptionId: subscriptionId,
+    );
+  }
+
+  Future<void> _notifyBackendSubscriptionConfirmed({
+    required String subscriptionId,
+    required String plan,
+  }) async {
+    // Opcional: informe o backend para validar o status e atualizar o usuário
+    // Ignore erros silenciosamente para não bloquear a UX
+    try {
+      final uri = Uri.parse('https://api.seudominio.com/stripe/subscriptions/$subscriptionId/confirm');
+      await http.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'plan': plan}),
+      );
+    } catch (_) {}
   }
 }
 
@@ -215,7 +335,7 @@ class _AnnualPlanCard extends StatelessWidget {
 
   void _onChoose(BuildContext context, String plan) {
     // Close the bottom sheet returning the selected plan
-    Navigator.of(context).pushNamed('/checkout', arguments: {'plan': plan});
+    Navigator.of(context).pop(plan);
   }
 }
 
@@ -276,7 +396,7 @@ class _MonthlyPlanCard extends StatelessWidget {
 
   void _onChoose(BuildContext context, String plan) {
     // Close the bottom sheet returning the selected plan
-    Navigator.of(context).pushNamed('/checkout', arguments: {'plan': plan});
+    Navigator.of(context).pop(plan);
   }
 }
 
@@ -305,6 +425,20 @@ class _BenefitRow extends StatelessWidget {
       ),
     );
   }
+}
+
+class _StripeInitData {
+  final String clientSecret;
+  final String customerId;
+  final String ephemeralKeySecret;
+  final String subscriptionId;
+
+  _StripeInitData({
+    required this.clientSecret,
+    required this.customerId,
+    required this.ephemeralKeySecret,
+    required this.subscriptionId,
+  });
 }
 
 class _Separator extends StatelessWidget {
