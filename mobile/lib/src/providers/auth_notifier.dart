@@ -138,8 +138,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
-    await _service.logout();
-    state = const AuthState();
+    try {
+      await _service.logout();
+    } catch (e) {
+      // Record error but proceed to clear auth state to ensure UI goes to login
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = const AuthState();
+    }
   }
 }
 

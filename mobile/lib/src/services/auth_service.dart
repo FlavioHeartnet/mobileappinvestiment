@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -36,27 +37,71 @@ class AuthService {
   /// Sign in with Google
   Future<bool> signInWithGoogle() async {
     try {
-      await _googleSignIn.initialize();
-      // Trigger the Google Sign-In flow (library exposes `authenticate` in this project)
-      final googleUser = await _googleSignIn.authenticate();
+      if (kIsWeb) {
+        // Web uses popup flow
+        await _firebaseAuth.signInWithPopup(GoogleAuthProvider());
+        return true;
+      }
 
-      // Obtain the auth details from the request (this version provides idToken)
-      final googleAuth = googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+      // Mobile (Android/iOS): interactive sign-in
+      GoogleSignInAccount? account;
+      try {
+        account = await _googleSignIn.signIn();
+      } catch (e) {
+        // Some platform builds may require initialize; ignore failures
+        try { await _googleSignIn.initialize(); } catch (_) {}
+        account ??= await _googleSignIn.signIn();
+      }
+
+      if (account == null) {
+        // User cancelled the picker
+        throw 'Login com Google cancelado pelo usuário.';
+      }
+
+      final googleAuth = await account.authentication;
+      if (googleAuth.idToken == null && googleAuth.accessToken == null) {
+        throw 'Não foi possível obter credenciais do Google neste dispositivo.';
+      }
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
       await _firebaseAuth.signInWithCredential(credential);
       return true;
     } on FirebaseAuthException catch (e) {
       throw _getErrorMessage(e);
+    } catch (e) {
+      final msg = e.toString();
+      if (msg.contains('No credential available') || msg.contains('No credentials available')) {
+        throw 'Não há conta Google disponível neste dispositivo. Adicione uma conta Google nas configurações do dispositivo ou use e-mail e senha.';
+      }
+      // Surface friendly message when possible
+      if (e is String) throw e;
+      throw 'Falha ao entrar com o Google. Verifique sua conexão e tente novamente.';
     }
   }
 
   /// Logout
   Future<void> logout() async {
-    await Future.wait([
-      _firebaseAuth.signOut(),
-      _googleSignIn.signOut(),
-    ]);
+    // Always attempt to sign out from Firebase
+    try {
+      await _firebaseAuth.signOut();
+    } catch (_) {
+      // Ignore to ensure UI flow continues even if signOut throws
+    }
+    // Best-effort: sign out from Google if applicable. Some platforms/plugins
+    // may throw or require initialization; we guard and ignore failures.
+    try {
+      // Initialize if the implementation requires it (no-op on others)
+      await _googleSignIn.initialize();
+    } catch (_) {}
+    try {
+      await _googleSignIn.signOut();
+    } catch (_) {
+      // Ignore Google sign-out errors to avoid blocking logout
+    }
   }
 
   /// Send password reset email

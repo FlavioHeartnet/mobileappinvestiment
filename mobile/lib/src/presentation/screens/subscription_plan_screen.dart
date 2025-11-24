@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
-
+const baseurl = 'https://ffd49bc130b1.ngrok-free.app';
 /// Route shim that opens the plans as a modal action sheet (bottom sheet)
 class SubscriptionPlanScreen extends StatefulWidget {
   const SubscriptionPlanScreen({super.key});
@@ -38,7 +38,6 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     try {
       // 1) Request backend to create/init the Stripe Subscription/Intent
       final initData = await _fetchStripeInitData(plan);
-
       // 2) Initialize PaymentSheet for SetupIntent (recomendado para assinatura)
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -87,7 +86,7 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     //   - ephemeralKeySecret (para o customer)
     //   - subscriptionId
     //   - mode: 'setup' | 'payment' (para sabermos qual PaymentSheet usar)
-    final uri = Uri.parse('https://8843b5123dce.ngrok-free.app/create-payment-intent');
+    final uri = Uri.parse('$baseurl/create-payment-intent');
 
     final resp = await http.post(
       uri,
@@ -141,7 +140,7 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     // Opcional: informe o backend para validar o status e atualizar o usuário
     // Ignore erros silenciosamente para não bloquear a UX
     try {
-      final uri = Uri.parse('https://api.seudominio.com/stripe/subscriptions/$subscriptionId/confirm');
+      final uri = Uri.parse('$baseurl/$subscriptionId/confirm');
       await http.post(
         uri,
         headers: {'Content-Type': 'application/json'},
