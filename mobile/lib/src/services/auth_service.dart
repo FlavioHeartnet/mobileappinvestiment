@@ -43,30 +43,22 @@ class AuthService {
         return true;
       }
 
-      // Mobile (Android/iOS): interactive sign-in
-      GoogleSignInAccount? account;
-      try {
-        account = await _googleSignIn.signIn();
-      } catch (e) {
-        // Some platform builds may require initialize; ignore failures
-        try { await _googleSignIn.initialize(); } catch (_) {}
-        account ??= await _googleSignIn.signIn();
+      // Guard unsupported platforms (e.g., desktop without a browser flow)
+      if (!(defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS)) {
+        throw 'Login com Google não é suportado neste dispositivo.';
       }
 
-      if (account == null) {
-        // User cancelled the picker
-        throw 'Login com Google cancelado pelo usuário.';
-      }
-
-      final googleAuth = await account.authentication;
-      if (googleAuth.idToken == null && googleAuth.accessToken == null) {
+      // Mobile/desktop: plugin in this project exposes an `authenticate` API
+      // that yields token data with idToken.
+      await _googleSignIn.initialize();
+      final account = await _googleSignIn.authenticate();
+      final googleAuth = account.authentication;
+      if (googleAuth.idToken == null) {
         throw 'Não foi possível obter credenciais do Google neste dispositivo.';
       }
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+      final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
 
       await _firebaseAuth.signInWithCredential(credential);
       return true;
@@ -78,7 +70,7 @@ class AuthService {
         throw 'Não há conta Google disponível neste dispositivo. Adicione uma conta Google nas configurações do dispositivo ou use e-mail e senha.';
       }
       // Surface friendly message when possible
-      if (e is String) throw e;
+      if (e is String) rethrow;
       throw 'Falha ao entrar com o Google. Verifique sua conexão e tente novamente.';
     }
   }
